@@ -2,17 +2,17 @@ package com.wesmart.stark.adapter.applicationservices.entities;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.wesmart.stark.adapter.applicationservices.utils.CaptureResponseDeserializer;
+import com.wesmart.stark.adapter.applicationservices.utils.RefundMessageSerializer;
+import com.wesmart.stark.adapter.applicationservices.utils.RefundResponseDeserializer;
 
-@JsonDeserialize(using = CaptureResponseDeserializer.class)
-public class CaptureResponse {
+@JsonDeserialize(using = RefundResponseDeserializer.class)
+public class RefundResponse {
 
 	private String correlationId;
 
-	private String captureId;
+	private String captureTraceabilityId;
 
-	private String authorizationTraceabilityId;
-
-	private String captureCode;
+	private String refundCode;
 
 	private String responseCode;
 
@@ -20,13 +20,13 @@ public class CaptureResponse {
 
 	private String message;
 
-	public CaptureResponse() {
+	public RefundResponse() {
 
 	}
 
-	public CaptureResponse(final String captureCode, final String responseCode, final String errorMessage, final String message) {
+	public RefundResponse(final String refundCode, final String responseCode, final String errorMessage, final String message) {
 
-		this.captureCode = captureCode;
+		this.refundCode = refundCode;
 		this.responseCode = responseCode;
 		this.errorMessage = errorMessage;
 		this.message = message;
@@ -42,34 +42,24 @@ public class CaptureResponse {
 		this.correlationId = correlationId;
 	}
 
-	public String getCaptureId() {
+	public String getCaptureTraceabilityId() {
 
-		return captureId;
+		return captureTraceabilityId;
 	}
 
-	public void setCaptureId(final String captureId) {
+	public void setCaptureTraceabilityId(final String captureTraceabilityId) {
 
-		this.captureId = captureId;
+		this.captureTraceabilityId = captureTraceabilityId;
 	}
 
-	public String getAuthorizationTraceabilityId() {
+	public String getRefundCode() {
 
-		return authorizationTraceabilityId;
+		return refundCode;
 	}
 
-	public void setAuthorizationTraceabilityId(final String authorizationTraceabilityId) {
+	public void setRefundCode(final String refundCode) {
 
-		this.authorizationTraceabilityId = authorizationTraceabilityId;
-	}
-
-	public String getCaptureCode() {
-
-		return captureCode;
-	}
-
-	public void setCaptureCode(final String captureCode) {
-
-		this.captureCode = captureCode;
+		this.refundCode = refundCode;
 	}
 
 	public String getResponseCode() {

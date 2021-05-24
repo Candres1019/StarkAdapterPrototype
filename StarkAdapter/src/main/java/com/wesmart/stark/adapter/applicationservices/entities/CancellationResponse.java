@@ -1,18 +1,16 @@
 package com.wesmart.stark.adapter.applicationservices.entities;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.wesmart.stark.adapter.applicationservices.utils.CaptureResponseDeserializer;
+import com.wesmart.stark.adapter.applicationservices.utils.CancellationResponseDeserializer;
 
-@JsonDeserialize(using = CaptureResponseDeserializer.class)
-public class CaptureResponse {
+@JsonDeserialize(using = CancellationResponseDeserializer.class)
+public class CancellationResponse {
 
 	private String correlationId;
 
-	private String captureId;
-
 	private String authorizationTraceabilityId;
 
-	private String captureCode;
+	private String cancellationCode;
 
 	private String responseCode;
 
@@ -20,13 +18,13 @@ public class CaptureResponse {
 
 	private String message;
 
-	public CaptureResponse() {
+	public CancellationResponse() {
 
 	}
 
-	public CaptureResponse(final String captureCode, final String responseCode, final String errorMessage, final String message) {
+	public CancellationResponse(final String cancellationCode, final String responseCode, final String errorMessage, final String message) {
 
-		this.captureCode = captureCode;
+		this.cancellationCode = cancellationCode;
 		this.responseCode = responseCode;
 		this.errorMessage = errorMessage;
 		this.message = message;
@@ -42,16 +40,6 @@ public class CaptureResponse {
 		this.correlationId = correlationId;
 	}
 
-	public String getCaptureId() {
-
-		return captureId;
-	}
-
-	public void setCaptureId(final String captureId) {
-
-		this.captureId = captureId;
-	}
-
 	public String getAuthorizationTraceabilityId() {
 
 		return authorizationTraceabilityId;
@@ -62,14 +50,14 @@ public class CaptureResponse {
 		this.authorizationTraceabilityId = authorizationTraceabilityId;
 	}
 
-	public String getCaptureCode() {
+	public String getCancellationCode() {
 
-		return captureCode;
+		return cancellationCode;
 	}
 
-	public void setCaptureCode(final String captureCode) {
+	public void setCancellationCode(final String cancellationCode) {
 
-		this.captureCode = captureCode;
+		this.cancellationCode = cancellationCode;
 	}
 
 	public String getResponseCode() {

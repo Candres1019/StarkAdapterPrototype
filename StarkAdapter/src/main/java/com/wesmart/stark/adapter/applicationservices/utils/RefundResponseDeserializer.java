@@ -6,28 +6,28 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import com.wesmart.stark.adapter.applicationservices.entities.CaptureResponse;
+import com.wesmart.stark.adapter.applicationservices.entities.RefundResponse;
 
-public class CaptureResponseDeserializer extends StdDeserializer<CaptureResponse> {
+public class RefundResponseDeserializer extends StdDeserializer<RefundResponse> {
 
-	public CaptureResponseDeserializer() {
+	public RefundResponseDeserializer() {
 
 		this(null);
 	}
 
-	public CaptureResponseDeserializer(Class<?> vc) {
+	public RefundResponseDeserializer(Class<?> vc) {
 
 		super(vc);
 	}
 
-	@Override public CaptureResponse deserialize(final JsonParser jsonParser, final DeserializationContext deserializationContext)
+	@Override public RefundResponse deserialize(final JsonParser jsonParser, final DeserializationContext deserializationContext)
 			throws IOException {
 
 		JsonNode node = jsonParser.getCodec().readTree(jsonParser);
-		String captureCode = node.get("captureCode").asText();
+		String refundCode = node.get("refundCode").asText();
 		String responseCode = node.get("status").asText();
 		String errorMessage = node.get("errorMessage").asText();
 		String message = node.get("message").asText();
-		return new CaptureResponse(captureCode, responseCode, errorMessage, message);
+		return new RefundResponse(refundCode, responseCode, errorMessage, message);
 	}
 }

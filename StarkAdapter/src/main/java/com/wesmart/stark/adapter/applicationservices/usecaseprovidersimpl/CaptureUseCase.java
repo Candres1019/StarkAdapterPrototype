@@ -34,7 +34,6 @@ public class CaptureUseCase implements Capture {
 			captureResponse.setCorrelationId(captureMessage.getCorrelationId());
 			captureResponse.setCaptureId(captureMessage.getCaptureId());
 			captureResponse.setAuthorizationTraceabilityId(captureMessage.getAuthorizationTraceabilityId());
-			captureResponse.setAuthorizationCode(captureMessage.getAuthorizationCode());
 			return captureResponse;
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();

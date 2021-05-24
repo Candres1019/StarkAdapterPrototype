@@ -6,28 +6,29 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import com.wesmart.stark.adapter.applicationservices.entities.CaptureResponse;
+import com.wesmart.stark.adapter.applicationservices.entities.CancellationResponse;
 
-public class CaptureResponseDeserializer extends StdDeserializer<CaptureResponse> {
+public class CancellationResponseDeserializer extends StdDeserializer<CancellationResponse> {
 
-	public CaptureResponseDeserializer() {
+	public CancellationResponseDeserializer() {
 
 		this(null);
 	}
 
-	public CaptureResponseDeserializer(Class<?> vc) {
+	public CancellationResponseDeserializer(Class<?> vc) {
 
 		super(vc);
 	}
 
-	@Override public CaptureResponse deserialize(final JsonParser jsonParser, final DeserializationContext deserializationContext)
+	@Override public CancellationResponse deserialize(final JsonParser jsonParser, final DeserializationContext deserializationContext)
 			throws IOException {
 
 		JsonNode node = jsonParser.getCodec().readTree(jsonParser);
-		String captureCode = node.get("captureCode").asText();
+		String cancellationCode = node.get("voidCode").asText();
 		String responseCode = node.get("status").asText();
 		String errorMessage = node.get("errorMessage").asText();
 		String message = node.get("message").asText();
-		return new CaptureResponse(captureCode, responseCode, errorMessage, message);
+		return new CancellationResponse(cancellationCode, responseCode, errorMessage, message);
 	}
+
 }
