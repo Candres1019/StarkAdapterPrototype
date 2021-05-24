@@ -1,0 +1,27 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fake.stark.acquirer.persistence.dao.UserDao">
+
+	<sql id="selectUsers">
+		SELECT identification AS usr_identification,
+			   name           AS usr_name,
+			   phone          AS usr_phone,
+			   address        AS usr_address,
+			   email          AS usr_email
+		FROM users
+	</sql>
+
+	<select id="getUserById" resultMap="UserResult">
+		<include refid="selectUsers"/>
+		WHERE identification = #{identification}
+	</select>
+
+	<resultMap id="UserResult" type="User">
+		<id property="identification" column="usr_identification"/>
+		<result property="name" column="usr_name"/>
+		<result property="phone" column="usr_phone"/>
+		<result property="address" column="usr_address"/>
+		<result property="email" column="usr_email"/>
+	</resultMap>
+
+</mapper>

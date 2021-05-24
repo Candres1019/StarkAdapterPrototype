@@ -1,0 +1,58 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fake.stark.acquirer.persistence.dao.PaymentDao">
+
+	<sql id="selectPayments">
+		SELECT pts.id              AS pts_id,
+			   pts.amount          AS pts_amount,
+			   pts.currency        AS pts_currency,
+			   pts.max_refund_date AS pts_max_refund_date,
+
+			   crc.number          AS crc_number,
+			   crc.type            AS crc_type,
+			   crc.card_holder     AS crc_card_holder,
+			   crc.expiration_date AS crc_expiration_date,
+
+			   usr.identification  AS usr_identification,
+			   usr.name            AS usr_name,
+			   usr.phone           AS usr_phone,
+			   usr.address         AS usr_address,
+			   usr.email           AS usr_email
+		FROM payments pts
+				 JOIN credit_cards crc ON crc.number = pts.credit_card_number
+				 JOIN users usr ON crc.user_identification = usr.identification
+	</sql>
+
+	<select id="getPaymentById" resultMap="PaymentsResult">
+		<include refid="selectPayments"/>
+		WHERE pts.id = #{id}
+	</select>
+
+	<select id="getAll" resultMap="PaymentsResult">
+		<include refid="selectPayments"/>
+	</select>
+
+	<insert id="insertPayment" parameterType="map">
+		INSERT INTO payments
+			(id, amount, currency, max_refund_date, credit_card_number)
+		VALUES (#{payment.id}, #{payment.amount}, #{payment.currency}, #{payment.maxRefundDate},
+				#{payment.creditCard.number})
+	</insert>
+
+	<update id="updatePayment" parameterType="map">
+		UPDATE payments
+		SET max_refund_date = #{payment.maxRefundDate}
+		WHERE id = #{payment.id}
+	</update>
+
+	<resultMap id="PaymentsResult" type="Payment">
+		<id property="id" column="pts_id"/>
+		<result property="amount" column="pts_amount"/>
+		<result property="currency" column="pts_currency"/>
+		<result property="maxRefundDate" column="pts_max_refund_date"/>
+		<association property="creditCard"
+					 resultMap="com.fake.stark.acquirer.persistence.dao.CreditCardDao.CreditCardResult"/>
+	</resultMap>
+
+
+</mapper>

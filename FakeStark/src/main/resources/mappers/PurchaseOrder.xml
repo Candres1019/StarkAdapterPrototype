@@ -1,0 +1,62 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fake.stark.acquirer.persistence.dao.PurchaseOrderDao">
+
+	<sql id="selectPurchaseOrders">
+		SELECT pco.id               AS pco_id,
+			   pco.status           AS pco_status,
+			   pco.description      AS pco_description,
+			   pco.shipping_address AS pco_shipping_address,
+
+			   pts.id               AS pts_id,
+			   pts.amount           AS pts_amount,
+			   pts.currency         AS pts_currency,
+			   pts.max_refund_date  AS pts_max_refund_date,
+
+			   crc.number           AS crc_number,
+			   crc.type             AS crc_type,
+			   crc.card_holder      AS crc_card_holder,
+			   crc.expiration_date  AS crc_expiration_date,
+
+			   usr.identification   AS usr_identification,
+			   usr.name             AS usr_name,
+			   usr.phone            AS usr_phone,
+			   usr.address          AS usr_address,
+			   usr.email            AS usr_email
+		FROM purchase_orders pco
+				 JOIN payments pts ON pco.payment_id = pts.id
+				 JOIN credit_cards crc ON crc.number = pts.credit_card_number
+				 JOIN users usr ON crc.user_identification = usr.identification
+
+	</sql>
+
+	<select id="getPurchaseOrderById" resultMap="PurchaseOrderResult">
+		<include refid="selectPurchaseOrders"/>
+		WHERE pco.id = #{id}
+	</select>
+
+	<insert id="insertPurchaseOrder" parameterType="map">
+		INSERT INTO purchase_orders
+			(id, status, description, shipping_address, payment_id)
+		VALUES (#{purchaseOrder.id}, #{purchaseOrder.status}, #{purchaseOrder.description},
+				#{purchaseOrder.shippingAddress},
+				#{purchaseOrder.payment.id})
+	</insert>
+
+	<update id="updatePurchaseOrder" parameterType="map">
+		UPDATE purchase_orders
+		SET status = #{purchaseOrder.status}, description = #{purchaseOrder.description}
+		WHERE id = #{purchaseOrder.id}
+	</update>
+
+	<resultMap id="PurchaseOrderResult" type="PurchaseOrder">
+		<id property="id" column="pco_id"/>
+		<result property="status" column="pco_status"/>
+		<result property="description" column="pco_description"/>
+		<result property="shippingAddress" column="pco_shipping_address"/>
+		<association property="payment"
+					 resultMap="com.fake.stark.acquirer.persistence.dao.PaymentDao.PaymentsResult"/>
+	</resultMap>
+
+
+</mapper>

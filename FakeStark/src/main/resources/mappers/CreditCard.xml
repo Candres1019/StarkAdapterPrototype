@@ -1,0 +1,34 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fake.stark.acquirer.persistence.dao.CreditCardDao">
+
+	<sql id="selectCreditCards">
+		SELECT crc.number          AS crc_number,
+			   crc.type            AS crc_type,
+			   crc.card_holder     AS crc_card_holder,
+			   crc.expiration_date AS crc_expiration_date,
+
+			   usr.identification  AS usr_identification,
+			   usr.name            AS usr_name,
+			   usr.phone           AS usr_phone,
+			   usr.address         AS usr_address,
+			   usr.email           AS usr_email
+		FROM credit_cards crc
+				 JOIN users usr ON crc.user_identification = usr.identification
+	</sql>
+
+	<select id="getCreditCardByUser" resultMap="CreditCardResult">
+		<include refid="selectCreditCards"/>
+		WHERE usr.identification = #{identification}
+	</select>
+
+	<resultMap id="CreditCardResult" type="CreditCard">
+		<id property="number" column="crc_number"/>
+		<result property="type" column="crc_type"/>
+		<result property="cardHolder" column="crc_card_holder"/>
+		<result property="expirationDate" column="crc_expiration_date"/>
+		<association property="user"
+					 resultMap="com.fake.stark.acquirer.persistence.dao.UserDao.UserResult"/>
+	</resultMap>
+
+</mapper>

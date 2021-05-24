@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<typeAliases>
+		<package name="com.fake.stark.acquirer.entities"/>
+	</typeAliases>
+
+	<mappers>
+		<mapper resource="mappers/User.xml"/>
+		<mapper resource="mappers/CreditCard.xml"/>
+		<mapper resource="mappers/Payment.xml"/>
+		<mapper resource="mappers/PurchaseOrder.xml"/>
+	</mappers>
+
+</configuration>
