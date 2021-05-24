@@ -1,0 +1,27 @@
+{
+	"correlationId": "a560358a-1078-49e5-b426-fc397de8617b",
+	"refundId": "fc397de8617b-b426-49e5-1078-a560358a",
+	"captureTraceabilityId": "a560358a-1078-49e5-b426-fc397de8617b",
+	"refundCode": "fc397de8617b-b426-49e5-1078-a560358a",
+	"maxRefundDate": "2621486800000",
+	"transaction": {
+		"id": "2aa2727e-9218-44d2-a3f3-909bb7285a4f",
+		"type": "refund",
+		"currency": "COP",
+		"status": "InVerification",
+		"total": 119000.0,
+		"tax": 19000.0,
+		"taxBase": 100000.0,
+		"paymentOrder": {
+			"id": "18261179-d3a0-4cfa-9ce9-06be03a94307"
+		}
+	},
+	"creditCard": {
+		"id": 123456789,
+		"type": "VISA",
+		"maskedNumber": "0000-00**-****-0000",
+		"token": "123456789923818231132",
+		"cardHolder": "CUSTOMER C CUSTOMER C",
+		"expirationDate": "2621486800000"
+	}
+}
