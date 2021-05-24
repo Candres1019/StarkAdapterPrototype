@@ -1,0 +1,29 @@
+{
+	"correlationId": "a560358a-1078-49e5-b426-fc397de8617b",
+	"captureId": "fc397de8617b-b426-49e5-1078-a560358a",
+	"authorizationTraceabilityId": "a560358a-1078-49e5-b426-fc397de8617b",
+	"authorizationCode": "fc397de8617b-b426-49e5-1078-a560358a",
+	"transaction": {
+		"id": "2f6ad34a-bcda-11eb-8529-0242ac130003",
+		"type": "capture",
+		"currency": "COP",
+		"status": "InVerification",
+		"total": 119000.0,
+		"tax": 19000.0,
+		"taxBase": 100000.0,
+		"paymentOrder": {
+			"id": "18261179-d3a0-4cfa-9ce9-06be03a94307",
+			"reference": "JAGSGB3-3131",
+			"description": "Test payment order",
+			"billingAddress": "Cl 5 No 1B - 72"
+		}
+	},
+	"creditCard": {
+		"id": 123456789,
+		"type": "VISA",
+		"maskedNumber": "0000-00**-****-0000",
+		"token": "123456789923818231132",
+		"cardHolder": "CUSTOMER C CUSTOMER C",
+		"expirationDate": "2621486800000"
+	}
+}
