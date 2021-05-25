@@ -22,17 +22,23 @@ public class CreditCardValidatorImpl implements CreditCardValidator {
 	public Boolean validateCreditCardForCapture(final CreditCard creditCard, final CreditCard oldCreditCard,
 												final CreditCard paymentCreditCard) {
 
-		return validateCaptureVoidCreditCard(creditCard, oldCreditCard, paymentCreditCard);
+		return validateCaptureVoidCreditCardRefund(creditCard, oldCreditCard, paymentCreditCard);
 	}
 
 	@Override public Boolean validateCreditCardForVoid(final CreditCard creditCard, final CreditCard oldCreditCard,
 													   final CreditCard paymentCreditCard) {
 
-		return validateCaptureVoidCreditCard(creditCard, oldCreditCard, paymentCreditCard);
+		return validateCaptureVoidCreditCardRefund(creditCard, oldCreditCard, paymentCreditCard);
 	}
 
-	private Boolean validateCaptureVoidCreditCard(final CreditCard creditCard, final CreditCard oldCreditCard,
-												  final CreditCard paymentCreditCard) {
+	@Override public Boolean validateCreditCardForRefund(final CreditCard creditCard, final CreditCard oldCreditCard,
+														 final CreditCard paymentCreditCard) {
+
+		return validateCaptureVoidCreditCardRefund(creditCard, oldCreditCard, paymentCreditCard);
+	}
+
+	private Boolean validateCaptureVoidCreditCardRefund(final CreditCard creditCard, final CreditCard oldCreditCard,
+														final CreditCard paymentCreditCard) {
 
 		if (creditCard == null) {
 			return true;

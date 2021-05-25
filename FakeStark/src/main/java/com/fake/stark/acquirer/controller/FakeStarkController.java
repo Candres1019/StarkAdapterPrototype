@@ -22,35 +22,43 @@ public class FakeStarkController {
 	}
 
 	@PostMapping(value = "/authorization")
-	public ResponseEntity<?> doAuthorization(@RequestBody PurchaseOrder purchaseOrder) {
+	public ResponseEntity<PurchaseOrder> doAuthorization(@RequestBody PurchaseOrder purchaseOrder) {
 
 		try {
-			return new ResponseEntity<>(transactionProcessor.processAuthorizationTransaction(purchaseOrder), HttpStatus.OK);
+			return ResponseEntity.status(HttpStatus.OK).body(transactionProcessor.processAuthorizationTransaction(purchaseOrder));
 		} catch (Exception e) {
-			e.printStackTrace();
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
 	}
 
 	@PostMapping(value = "/capture")
-	public ResponseEntity<?> doCapture(@RequestBody PurchaseOrder purchaseOrder) {
+	public ResponseEntity<PurchaseOrder> doCapture(@RequestBody PurchaseOrder purchaseOrder) {
 
 		try {
-			return new ResponseEntity<>(transactionProcessor.processCaptureTransaction(purchaseOrder), HttpStatus.OK);
+			return ResponseEntity.status(HttpStatus.OK).body(transactionProcessor.processCaptureTransaction(purchaseOrder));
 		} catch (Exception e) {
-			e.printStackTrace();
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
 	}
 
 	@PostMapping(value = "/void")
-	public ResponseEntity<?> doVoid(@RequestBody PurchaseOrder purchaseOrder) {
+	public ResponseEntity<PurchaseOrder> doVoid(@RequestBody PurchaseOrder purchaseOrder) {
 
 		try {
-			return new ResponseEntity<>(transactionProcessor.processVoidTransaction(purchaseOrder), HttpStatus.OK);
+			return ResponseEntity.status(HttpStatus.OK).body(transactionProcessor.processVoidTransaction(purchaseOrder));
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+	}
+
+	@PostMapping(value = "/refund")
+	public ResponseEntity<PurchaseOrder> doRefund(@RequestBody PurchaseOrder purchaseOrder) {
+
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(transactionProcessor.processRefundTransaction(purchaseOrder));
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
 	}
 

@@ -3,7 +3,6 @@ package com.fake.stark.acquirer.persistence.dao;
 import java.util.List;
 
 import com.fake.stark.acquirer.entities.Payment;
-import com.fake.stark.acquirer.entities.PurchaseOrder;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

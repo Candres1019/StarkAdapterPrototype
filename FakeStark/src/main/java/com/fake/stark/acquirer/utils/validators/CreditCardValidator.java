@@ -11,4 +11,7 @@ public interface CreditCardValidator {
 	Boolean validateCreditCardForCapture(CreditCard creditCard, CreditCard oldCreditCard, CreditCard paymentCreditCard);
 
 	Boolean validateCreditCardForVoid(CreditCard creditCard, CreditCard oldCreditCard, CreditCard paymentCreditCard);
+
+	Boolean validateCreditCardForRefund(CreditCard creditCard, CreditCard oldCreditCard,
+										CreditCard paymentCreditCard);
 }
