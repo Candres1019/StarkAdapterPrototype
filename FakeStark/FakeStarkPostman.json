@@ -1,0 +1,121 @@
+{
+	"info": {
+		"_postman_id": "b2872f17-32ac-49d5-8254-ded7e134fe01",
+		"name": "Prototype",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authorization",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"description\": \"Test payment order\",\n    \"shippingAddress\": \"Cl 5 No 1B - 72\",\n    \"payment\": {\n        \"maxRefundDate\": \"null\",\n        \"amount\": 119000,\n        \"currency\": \"COP\",\n        \"id\": \"18261179-d3a0-4cfa-9ce9-06be03a94307\",\n        \"creditCard\": {\n            \"number\": \"1234-5678-8765-4321\",\n            \"type\": \"VISA\",\n            \"user\": {\n                \"identification\": 1019151395,\n                \"phone\": \"+57 3174414419\",\n                \"name\": \"CustomerName\",\n                \"email\": \"customer@mail.com\"\n            },\n            \"expirationDate\": 2621486800000\n        }\n    },\n    \"id\": \"2aa2727e-9218-44d2-a3f3-909bb7285a4f\",\n    \"status\": \"InVerification\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8002/authorization",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8002",
+					"path": [
+						"authorization"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Capture",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"description\": \"Test payment order\",\n    \"shippingAddress\": \"Cl 5 No 1B - 72\",\n    \"payment\": {\n        \"maxRefundDate\": \"null\",\n        \"amount\": 119000,\n        \"currency\": \"COP\",\n        \"id\": \"18261179-d3a0-4cfa-9ce9-06be03a94307\",\n        \"creditCard\": {\n            \"number\": \"1234-5678-8765\",\n            \"type\": \"VISA\"\n        }\n    },\n    \"id\": \"2aa2727e-9218-44d2-a3f3-909bb7285a4f\",\n    \"status\": \"InVerification\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8002/capture",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8002",
+					"path": [
+						"capture"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Void",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"description\": null,\n    \"shippingAddress\": null,\n    \"payment\": {\n        \"maxRefundDate\": \"\",\n        \"amount\": 119000,\n        \"currency\": \"COP\",\n        \"id\": \"18261179-d3a0-4cfa-9ce9-06be03a94307\",\n        \"creditCard\": {\n            \"number\": \"1234-5678-8765-4321\",\n            \"type\": \"VISA\",\n            \"expirationDate\": 2621486800000\n        }\n    },\n    \"id\": \"2aa2727e-9218-44d2-a3f3-909bb7285a4f\",\n    \"status\": \"Authorization Approved\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8002/void",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8002",
+					"path": [
+						"void"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Refund",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"description\": null,\n    \"shippingAddress\": null,\n    \"payment\": {\n        \"maxRefundDate\": 2621486800000,\n        \"amount\": 119000,\n        \"currency\": \"COP\",\n        \"id\": \"18261179-d3a0-4cfa-9ce9-06be03a94307\",\n        \"creditCard\": {\n            \"number\": \"1234-5678-8765-4321\",\n            \"type\": \"VISA\",\n            \"expirationDate\": 2621486800000\n        }\n    },\n    \"id\": \"2aa2727e-9218-44d2-a3f3-909bb7285a4f\",\n    \"status\": \"InVerification\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8002/refund",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8002",
+					"path": [
+						"refund"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
