@@ -43,11 +43,11 @@ public class FakeStarkController {
 		}
 	}
 
-	@PostMapping(value = "/all")
-	public ResponseEntity<?> ddsadada() {
+	@PostMapping(value = "/void")
+	public ResponseEntity<?> doVoid(@RequestBody PurchaseOrder purchaseOrder) {
 
 		try {
-			return new ResponseEntity<>(transactionProcessor.processAll(), HttpStatus.OK);
+			return new ResponseEntity<>(transactionProcessor.processVoidTransaction(purchaseOrder), HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);

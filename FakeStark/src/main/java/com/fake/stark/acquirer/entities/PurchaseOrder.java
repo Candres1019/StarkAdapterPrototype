@@ -1,6 +1,6 @@
 package com.fake.stark.acquirer.entities;
 
-import com.fake.stark.acquirer.utils.PurchaseOrderSerializer;
+import com.fake.stark.acquirer.utils.jsonmappers.PurchaseOrderSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @JsonSerialize(using = PurchaseOrderSerializer.class)

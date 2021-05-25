@@ -9,6 +9,7 @@ import com.fake.stark.acquirer.entities.PurchaseOrder;
 import com.fake.stark.acquirer.persistence.Persistence;
 import com.fake.stark.acquirer.services.TransactionProcessor;
 import com.fake.stark.acquirer.services.TransactionStates;
+import com.fake.stark.acquirer.utils.validators.CreditCardValidator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,97 +20,142 @@ import org.springframework.stereotype.Component;
 public class TransactionProcessorImpl implements TransactionProcessor {
 
 	private static final Integer MAX_REFUND_DAYS = 2;
+	private static final String COMPLETED_DESCRIPTION = "Completed";
 	private final Persistence persistence;
+	private final CreditCardValidator creditCardValidator;
 
 	@Autowired
-	public TransactionProcessorImpl(@Qualifier("myBatisPersistence") Persistence persistence) {
+	public TransactionProcessorImpl(@Qualifier("myBatisPersistence") final Persistence persistence,
+									@Qualifier("creditCardValidatorImpl") final CreditCardValidator creditCardValidator) {
 
 		this.persistence = persistence;
+		this.creditCardValidator = creditCardValidator;
 	}
 
-	@Override
-	public String processAuthorizationTransaction(final PurchaseOrder purchaseOrder) throws JsonProcessingException {
+	@Override public String processAuthorizationTransaction(final PurchaseOrder purchaseOrder) throws JsonProcessingException {
 
 		try {
+			var transactionStates = TransactionStates.AUTHORIZATION_APPROVED;
 			var user = persistence.getUserById(purchaseOrder.getPayment().getCreditCard().getUser().getIdentification());
+			var oldPurchaseOrder = persistence.getPurchaseOrderById(purchaseOrder.getId());
 			if (user == null) {
-				purchaseOrder.setStatus(TransactionStates.AUTHORIZATION_REJECTED_INVALID_USER.name());
-				purchaseOrder.setDescription(TransactionStates.AUTHORIZATION_REJECTED_INVALID_USER.getName());
+				transactionStates = TransactionStates.AUTHORIZATION_REJECTED_INVALID_USER;
 			} else {
 				var creditCard = persistence.getCreditCardByUser(user.getIdentification());
 				var payment = persistence.getPaymentById(purchaseOrder.getPayment().getId());
-				if (creditCard == null || !creditCard.getNumber().equals(purchaseOrder.getPayment().getCreditCard().getNumber())
-						|| creditCard.getExpirationDate().getTime() < System.currentTimeMillis()) {
-					purchaseOrder.setStatus(TransactionStates.AUTHORIZATION_REJECTED_CREDIT_CARD_INVALID.name());
-					purchaseOrder.setDescription(TransactionStates.AUTHORIZATION_REJECTED_CREDIT_CARD_INVALID.getName());
+				if (creditCardValidator.validateCreditCardForAuthorization(creditCard, purchaseOrder.getPayment().getCreditCard())) {
+					transactionStates = TransactionStates.AUTHORIZATION_REJECTED_CREDIT_CARD_INVALID;
+				} else if (oldPurchaseOrder != null && oldPurchaseOrder.getDescription().contains(COMPLETED_DESCRIPTION)) {
+					transactionStates = TransactionStates.AUTHORIZATION_ALREADY_PROCESSED;
 				} else if (null != payment) {
-					purchaseOrder.setStatus(TransactionStates.AUTHORIZATION_ALREADY_PROCESSED.name());
-					purchaseOrder.setDescription(TransactionStates.AUTHORIZATION_ALREADY_PROCESSED.getName());
-				} else {
-					purchaseOrder.setStatus(TransactionStates.AUTHORIZATION_APPROVED.name());
-					purchaseOrder.setDescription(TransactionStates.AUTHORIZATION_APPROVED.getName());
-					persistence.insertPayment(purchaseOrder.getPayment());
-					persistence.insertPurchaseOrder(purchaseOrder);
+					transactionStates = TransactionStates.AUTHORIZATION_ALREADY_PROCESSED;
 				}
 			}
+			purchaseOrder.setStatus(transactionStates.name());
+			purchaseOrder.setDescription(transactionStates.getName());
+			if (transactionStates.equals(TransactionStates.AUTHORIZATION_APPROVED)) {
+				persistence.insertPayment(purchaseOrder.getPayment());
+				persistence.insertPurchaseOrder(purchaseOrder);
+			}
 		} catch (Exception e) {
-			e.printStackTrace();
 			purchaseOrder.setStatus(TransactionStates.ERROR_IN_THE_SERVER.name());
 			purchaseOrder.setDescription("Authorization, " + TransactionStates.ERROR_IN_THE_SERVER.getName());
 		}
 		return new ObjectMapper().writeValueAsString(purchaseOrder);
 	}
 
-	@Override
-	public String processCaptureTransaction(final PurchaseOrder purchaseOrder) throws JsonProcessingException {
+	@Override public String processCaptureTransaction(final PurchaseOrder purchaseOrder) throws JsonProcessingException {
 
 		try {
+			var transactionStates = TransactionStates.CAPTURE_APPROVED;
 			var oldPurchaseOrder = persistence.getPurchaseOrderById(purchaseOrder.getId());
 			purchaseOrder.getPayment().setMaxRefundDate(new Date(0L));
 			if (oldPurchaseOrder == null) {
-				purchaseOrder.setStatus(TransactionStates.CAPTURE_REJECTED_INVALID_ID.name());
-				purchaseOrder.setDescription(TransactionStates.CAPTURE_REJECTED_INVALID_ID.getName());
+				transactionStates = TransactionStates.CAPTURE_REJECTED_INVALID_ID;
 			} else {
 				var creditCard = persistence
 						.getCreditCardByUser(oldPurchaseOrder.getPayment().getCreditCard().getUser().getIdentification());
 				var payment = persistence.getPaymentById(purchaseOrder.getPayment().getId());
 				if (payment == null) {
-					purchaseOrder.setStatus(TransactionStates.CAPTURE_REJECTED_PAYMENT_ID_INVALID.name());
-					purchaseOrder.setDescription(TransactionStates.CAPTURE_REJECTED_PAYMENT_ID_INVALID.getName());
-				} else if (creditCard == null || !creditCard.getNumber().equals(purchaseOrder.getPayment().getCreditCard().getNumber())
-						|| !payment.getCreditCard().getNumber().equals(purchaseOrder.getPayment().getCreditCard().getNumber())) {
-					purchaseOrder.setStatus(TransactionStates.CAPTURE_REJECTED_CREDIT_CARD_INVALID.name());
-					purchaseOrder.setDescription(TransactionStates.CAPTURE_REJECTED_CREDIT_CARD_INVALID.getName());
-				} else if (oldPurchaseOrder.getDescription().contains("Completed")) {
-					purchaseOrder.setStatus(TransactionStates.CAPTURE_ALREADY_PROCESSED.name());
-					purchaseOrder.setDescription(TransactionStates.CAPTURE_ALREADY_PROCESSED.getName());
+					transactionStates = TransactionStates.CAPTURE_REJECTED_PAYMENT_ID_INVALID;
+				} else if (creditCardValidator
+						.validateCreditCardForCapture(creditCard, purchaseOrder.getPayment().getCreditCard(), payment.getCreditCard())) {
+					transactionStates = TransactionStates.CAPTURE_REJECTED_CREDIT_CARD_INVALID;
+				} else if (oldPurchaseOrder.getDescription().contains(COMPLETED_DESCRIPTION)) {
+					transactionStates = this.getCompletedTransactionReasonCapture(oldPurchaseOrder.getStatus());
 				} else {
-					purchaseOrder.getPayment().setMaxRefundDate(new Date(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(2)));
-					purchaseOrder.setStatus(TransactionStates.CAPTURE_APPROVED.name());
-					purchaseOrder.setDescription(TransactionStates.CAPTURE_APPROVED.getName());
-					persistence.updatePayment(purchaseOrder.getPayment());
-					persistence.updatePurchaseOrder(purchaseOrder);
+					purchaseOrder.getPayment()
+								 .setMaxRefundDate(new Date(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(MAX_REFUND_DAYS)));
 				}
 			}
+			purchaseOrder.setStatus(transactionStates.name());
+			purchaseOrder.setDescription(transactionStates.getName());
+			if (transactionStates.equals(TransactionStates.CAPTURE_APPROVED)) {
+				persistence.updatePayment(purchaseOrder.getPayment());
+				persistence.updatePurchaseOrder(purchaseOrder);
+			}
 		} catch (Exception e) {
-			e.printStackTrace();
 			purchaseOrder.setStatus(TransactionStates.ERROR_IN_THE_SERVER.name());
 			purchaseOrder.setDescription("Capture, " + TransactionStates.ERROR_IN_THE_SERVER.getName());
 		}
 		return new ObjectMapper().writeValueAsString(purchaseOrder);
 	}
 
-	@Override public Object processAll() {
+	@Override public String processVoidTransaction(final PurchaseOrder purchaseOrder) throws JsonProcessingException {
 
-		List<Payment> payments = persistence.getAll();
-
-		for (Payment payment : payments) {
-			System.out.println(payment.getId());
+		try {
+			var transactionStates = TransactionStates.VOID_APPROVED;
+			var oldPurchaseOrder = persistence.getPurchaseOrderById(purchaseOrder.getId());
+			if (oldPurchaseOrder == null) {
+				transactionStates = TransactionStates.VOID_REJECTED_INVALID_ID;
+			} else {
+				var creditCard = persistence
+						.getCreditCardByUser(oldPurchaseOrder.getPayment().getCreditCard().getUser().getIdentification());
+				var payment = persistence.getPaymentById(purchaseOrder.getPayment().getId());
+				if (payment == null) {
+					transactionStates = TransactionStates.VOID_REJECTED_PAYMENT_ID_INVALID;
+				} else if (creditCardValidator
+						.validateCreditCardForVoid(creditCard, purchaseOrder.getPayment().getCreditCard(), payment.getCreditCard())) {
+					purchaseOrder.setStatus(TransactionStates.VOID_REJECTED_CREDIT_CARD_INVALID.name());
+					purchaseOrder.setDescription(TransactionStates.VOID_REJECTED_CREDIT_CARD_INVALID.getName());
+				} else if (oldPurchaseOrder.getDescription().contains(COMPLETED_DESCRIPTION)) {
+					transactionStates = this.getCompletedTransactionReasonVoid(oldPurchaseOrder.getStatus());
+				}
+			}
+			purchaseOrder.setStatus(transactionStates.name());
+			purchaseOrder.setDescription(transactionStates.getName());
+			if (transactionStates.equals(TransactionStates.VOID_APPROVED)) {
+				purchaseOrder.getPayment().setMaxRefundDate(new Date(0L));
+				persistence.updatePayment(purchaseOrder.getPayment());
+				persistence.updatePurchaseOrder(purchaseOrder);
+			}
+		} catch (Exception e) {
+			purchaseOrder.setStatus(TransactionStates.ERROR_IN_THE_SERVER.name());
+			purchaseOrder.setDescription("Void, " + TransactionStates.ERROR_IN_THE_SERVER.getName());
 		}
+		return new ObjectMapper().writeValueAsString(purchaseOrder);
+	}
 
-		Payment payment = persistence.getPaymentById("18261179-d3a0-4cfa-9ce9-06be03a94307");
-		System.out.println(payment.getId());
-		return null;
+	private TransactionStates getCompletedTransactionReasonCapture(String status) {
+
+		if (status.contains("CAPTURE")) {
+			return TransactionStates.CAPTURE_ALREADY_PROCESSED;
+		} else if (status.contains("VOID")) {
+			return TransactionStates.CAPTURE_ALREADY_PROCESSED_V;
+		} else {
+			return TransactionStates.CAPTURE_ALREADY_PROCESSED_R;
+		}
+	}
+
+	private TransactionStates getCompletedTransactionReasonVoid(String status) {
+
+		if (status.contains("CAPTURE")) {
+			return TransactionStates.VOID_ALREADY_PROCESSED_C;
+		} else if (status.contains("VOID")) {
+			return TransactionStates.VOID_ALREADY_PROCESSED;
+		} else {
+			return TransactionStates.VOID_ALREADY_PROCESSED_R;
+		}
 	}
 
 }

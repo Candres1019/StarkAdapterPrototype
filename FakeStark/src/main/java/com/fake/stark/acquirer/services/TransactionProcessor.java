@@ -11,5 +11,6 @@ public interface TransactionProcessor {
 
 	String processCaptureTransaction(PurchaseOrder purchaseOrder) throws JsonProcessingException;
 
-	Object processAll();
+	String processVoidTransaction(PurchaseOrder purchaseOrder) throws JsonProcessingException;
+
 }

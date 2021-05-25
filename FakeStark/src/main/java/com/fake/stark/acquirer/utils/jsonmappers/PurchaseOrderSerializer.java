@@ -1,4 +1,4 @@
-package com.fake.stark.acquirer.utils;
+package com.fake.stark.acquirer.utils.jsonmappers;
 
 import java.io.IOException;
 
@@ -28,14 +28,14 @@ public class PurchaseOrderSerializer extends StdSerializer<PurchaseOrder> {
 
 		jsonGenerator.writeStartObject();
 		jsonGenerator.writeStringField(ID_FIELD, purchaseOrder.getId());
-		if (purchaseOrder.getDescription().contains("Authorization")) {
+		if (purchaseOrder.getStatus().contains("AUTHORIZATION")) {
 			jsonGenerator.writeStringField("authorizationCode", "AUTH" + System.currentTimeMillis());
 			jsonGenerator.writeStringField(DAYS_UNTIL_EXPIRATION, "None");
-		} else if (purchaseOrder.getDescription().contains("Capture")) {
+		} else if (purchaseOrder.getStatus().contains("CAPTURE")) {
 			jsonGenerator.writeStringField("captureCode", "CAPT" + System.currentTimeMillis());
 			jsonGenerator.writeStringField(DAYS_UNTIL_EXPIRATION,
 										   String.valueOf(purchaseOrder.getPayment().getMaxRefundDate().getTime()));
-		} else if (purchaseOrder.getDescription().contains("Refund")) {
+		} else if (purchaseOrder.getStatus().contains("REFUND")) {
 			jsonGenerator.writeStringField("refundCode", "REND" + System.currentTimeMillis());
 			jsonGenerator.writeStringField(DAYS_UNTIL_EXPIRATION, "None");
 		} else {
