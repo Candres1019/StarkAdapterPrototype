@@ -10,10 +10,12 @@ import com.fake.stark.acquirer.utils.validators.AuthorizationValidator;
 import com.fake.stark.acquirer.utils.validators.CaptureValidator;
 import com.fake.stark.acquirer.utils.validators.RefundValidator;
 import com.fake.stark.acquirer.utils.validators.VoidValidator;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+@Log4j2
 @Component("transactionProcessorImpl")
 public class TransactionProcessorImpl implements TransactionProcessor {
 
@@ -25,10 +27,10 @@ public class TransactionProcessorImpl implements TransactionProcessor {
 
 	@Autowired
 	public TransactionProcessorImpl(@Qualifier("myBatisPersistence") final Persistence persistence,
-									@Qualifier("authorizationValidatorImpl") final AuthorizationValidator authorizationValidator,
-									@Qualifier("captureValidatorImpl") final CaptureValidator captureValidator,
-									@Qualifier("voidValidatorImpl") final VoidValidator voidValidator,
-									@Qualifier("refundValidatorImpl") final RefundValidator refundValidator) {
+	                                @Qualifier("authorizationValidatorImpl") final AuthorizationValidator authorizationValidator,
+	                                @Qualifier("captureValidatorImpl") final CaptureValidator captureValidator,
+	                                @Qualifier("voidValidatorImpl") final VoidValidator voidValidator,
+	                                @Qualifier("refundValidatorImpl") final RefundValidator refundValidator) {
 
 		this.persistence = persistence;
 		this.authorizationValidator = authorizationValidator;
@@ -48,6 +50,7 @@ public class TransactionProcessorImpl implements TransactionProcessor {
 				persistence.insertPurchaseOrder(purchaseOrder);
 			}
 		} catch (Exception e) {
+			log.error(e.getMessage());
 			purchaseOrder.setStatus(TransactionStates.ERROR_IN_THE_SERVER.name());
 			purchaseOrder.setDescription("Authorization, " + TransactionStates.ERROR_IN_THE_SERVER.getName());
 		}
@@ -65,6 +68,7 @@ public class TransactionProcessorImpl implements TransactionProcessor {
 				persistence.updatePurchaseOrder(purchaseOrder);
 			}
 		} catch (Exception e) {
+			log.error(e.getMessage());
 			purchaseOrder.setStatus(TransactionStates.ERROR_IN_THE_SERVER.name());
 			purchaseOrder.setDescription("Capture, " + TransactionStates.ERROR_IN_THE_SERVER.getName());
 		}
@@ -83,6 +87,7 @@ public class TransactionProcessorImpl implements TransactionProcessor {
 				persistence.updatePurchaseOrder(purchaseOrder);
 			}
 		} catch (Exception e) {
+			log.error(e.getMessage());
 			purchaseOrder.setStatus(TransactionStates.ERROR_IN_THE_SERVER.name());
 			purchaseOrder.setDescription("Void, " + TransactionStates.ERROR_IN_THE_SERVER.getName());
 		}
@@ -101,6 +106,7 @@ public class TransactionProcessorImpl implements TransactionProcessor {
 				persistence.updatePurchaseOrder(purchaseOrder);
 			}
 		} catch (Exception e) {
+			log.error(e.getMessage());
 			purchaseOrder.setStatus(TransactionStates.ERROR_IN_THE_SERVER.name());
 			purchaseOrder.setDescription("Void, " + TransactionStates.ERROR_IN_THE_SERVER.getName());
 		}
