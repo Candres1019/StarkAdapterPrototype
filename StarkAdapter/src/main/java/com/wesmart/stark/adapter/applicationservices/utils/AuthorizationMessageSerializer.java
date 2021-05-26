@@ -19,10 +19,8 @@ public class AuthorizationMessageSerializer extends StdSerializer<AuthorizationM
 		super(t);
 	}
 
-	@Override
-	public void serialize(final AuthorizationMessage authorizationMessage, final JsonGenerator jsonGenerator,
-						  final SerializerProvider serializerProvider)
-			throws IOException {
+	@Override public void serialize(final AuthorizationMessage authorizationMessage, final JsonGenerator jsonGenerator,
+	                                final SerializerProvider serializerProvider) throws IOException {
 
 		jsonGenerator.writeStartObject();
 		jsonGenerator.writeStringField("id", authorizationMessage.getTransaction().getId().toString());

@@ -20,8 +20,7 @@ public class CaptureMessageSerializer extends StdSerializer<CaptureMessage> {
 	}
 
 	@Override public void serialize(final CaptureMessage captureMessage, final JsonGenerator jsonGenerator,
-									final SerializerProvider serializerProvider)
-			throws IOException {
+	                                final SerializerProvider serializerProvider) throws IOException {
 
 		jsonGenerator.writeStartObject();
 		jsonGenerator.writeStringField("id", captureMessage.getTransaction().getId().toString());

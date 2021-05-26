@@ -20,8 +20,7 @@ public class AuthorizationResponseDeserializer extends StdDeserializer<Authoriza
 		super(vc);
 	}
 
-	@Override
-	public AuthorizationResponse deserialize(final JsonParser jsonParser, final DeserializationContext deserializationContext)
+	@Override public AuthorizationResponse deserialize(final JsonParser jsonParser, final DeserializationContext deserializationContext)
 			throws IOException {
 
 		JsonNode node = jsonParser.getCodec().readTree(jsonParser);

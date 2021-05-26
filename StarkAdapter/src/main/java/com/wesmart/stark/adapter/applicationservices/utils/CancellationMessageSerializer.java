@@ -19,10 +19,8 @@ public class CancellationMessageSerializer extends StdSerializer<CancellationMes
 		super(t);
 	}
 
-	@Override
-	public void serialize(final CancellationMessage cancellationMessage, final JsonGenerator jsonGenerator,
-						  final SerializerProvider serializerProvider)
-			throws IOException {
+	@Override public void serialize(final CancellationMessage cancellationMessage, final JsonGenerator jsonGenerator,
+	                                final SerializerProvider serializerProvider) throws IOException {
 
 		jsonGenerator.writeStartObject();
 		jsonGenerator.writeStringField("id", cancellationMessage.getTransaction().getId().toString());
