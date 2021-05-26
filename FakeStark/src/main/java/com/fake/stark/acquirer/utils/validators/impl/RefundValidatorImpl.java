@@ -49,7 +49,7 @@ public class RefundValidatorImpl implements RefundValidator {
 	private TransactionStates getCompletedTransactionReasonRefund(String status) {
 
 		if (status.contains("AUTHORIZATION")) {
-			return TransactionStates.REFUND_IN_AUTHORIZATION_APPROVAL;
+			return TransactionStates.REFUND_IN_APPROVAL;
 		} else if (status.contains("VOID")) {
 			return TransactionStates.REFUND_ALREADY_PROCESSED_V;
 		} else {

@@ -28,7 +28,7 @@ public enum TransactionStates {
 	REFUND_REJECTED_PAYMENT_ID_INVALID("Refund Rejected, The ID of the payment is not in the records."),
 	REFUND_REJECTED_CREDIT_CARD_INVALID("Refund Rejected, Credit Card Invalid."),
 	REFUND_REJECTED_MAX_REFUND_DATE_EXPIRED("Refund Rejected,  The maximum time for refund has already passed"),
-	REFUND_IN_AUTHORIZATION_APPROVAL("Refund: The transaction still in authorization."),
+	REFUND_IN_APPROVAL("Refund: The transaction still in authorization."),
 	REFUND_ALREADY_PROCESSED_V("Refund: Void transaction already processed."),
 	REFUND_ALREADY_PROCESSED("Refund: Transaction Already Processed."),
 
