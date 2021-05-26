@@ -1,5 +1,14 @@
 package com.fake.stark.acquirer.services;
 
+import lombok.Getter;
+
+/**
+ * Enum class that define the possible TransactionStates and his content
+ *
+ * @author Andres Calderon - andres.calderon@payu.com
+ * @version 0.0.1
+ * @since 0.0.1
+ */
 public enum TransactionStates {
 
 	AUTHORIZATION_APPROVED("Authorization Approved"),
@@ -34,15 +43,20 @@ public enum TransactionStates {
 
 	ERROR_IN_THE_SERVER("Error in the server.");
 
-	private final String name;
+	/**
+	 * Content of the Enum
+	 *
+	 * @param name - content of the enum
+	 */
+	@Getter private final String name;
 
+	/**
+	 * Instantiates a new TransactionStates
+	 * @param name
+	 */
 	TransactionStates(final String name) {
 
 		this.name = name;
 	}
 
-	public String getName() {
-
-		return name;
-	}
 }
