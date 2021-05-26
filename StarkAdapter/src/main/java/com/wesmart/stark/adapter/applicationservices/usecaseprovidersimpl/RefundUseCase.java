@@ -22,21 +22,17 @@ public class RefundUseCase implements Refund {
 		this.starkRestClient = starkRestClient;
 	}
 
-	@Override public RefundResponse doRefund(final RefundMessage refundMessage, final JsonNode creditCardJson) {
+	@Override public RefundResponse doRefund(final RefundMessage refundMessage, final JsonNode creditCardJson)
+			throws JsonProcessingException {
 
-		try {
-			var refundMessageSerialized = new ObjectMapper().writeValueAsString(refundMessage);
-			var refundMessageJson = new JSONObject(refundMessageSerialized);
-			refundMessageJson.getJSONObject("payment").getJSONObject("creditCard")
-							 .put("number", creditCardJson.get("number").asText());
-			var refundResponseJson = starkRestClient.doRefund(refundMessageJson);
-			var refundResponse = new ObjectMapper().readValue(refundResponseJson.toString(), RefundResponse.class);
-			refundResponse.setCorrelationId(refundMessage.getCorrelationId());
-			refundResponse.setCaptureTraceabilityId(refundMessage.getCaptureTraceabilityId());
-			return refundResponse;
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-		return null;
+		var refundMessageSerialized = new ObjectMapper().writeValueAsString(refundMessage);
+		var refundMessageJson = new JSONObject(refundMessageSerialized);
+		refundMessageJson.getJSONObject("payment").getJSONObject("creditCard")
+		                 .put("number", creditCardJson.get("number").asText());
+		var refundResponseJson = starkRestClient.doRefund(refundMessageJson);
+		var refundResponse = new ObjectMapper().readValue(refundResponseJson.toString(), RefundResponse.class);
+		refundResponse.setCorrelationId(refundMessage.getCorrelationId());
+		refundResponse.setCaptureTraceabilityId(refundMessage.getCaptureTraceabilityId());
+		return refundResponse;
 	}
 }

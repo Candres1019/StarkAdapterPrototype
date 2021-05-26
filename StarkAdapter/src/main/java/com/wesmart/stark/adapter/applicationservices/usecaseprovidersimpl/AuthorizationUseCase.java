@@ -22,22 +22,18 @@ public class AuthorizationUseCase implements Authorization {
 		this.starkRestClient = starkRestClient;
 	}
 
-	@Override public AuthorizationResponse doAuthorization(final AuthorizationMessage authorizationMessage, final JsonNode creditCardJson) {
+	@Override public AuthorizationResponse doAuthorization(final AuthorizationMessage authorizationMessage, final JsonNode creditCardJson)
+			throws JsonProcessingException {
 
-		try {
-			var authorizationMessageSerialized = new ObjectMapper().writeValueAsString(authorizationMessage);
-			var authorizationMessageJson = new JSONObject(authorizationMessageSerialized);
-			authorizationMessageJson.getJSONObject("payment").getJSONObject("creditCard")
-									.put("number", creditCardJson.get("number").asText());
-			var authorizationResponseJson = starkRestClient.doAuthorization(authorizationMessageJson);
-			var authorizationResponse = new ObjectMapper().readValue(authorizationResponseJson.toString(),
-																	 AuthorizationResponse.class);
-			authorizationResponse.setTraceabilityId(authorizationMessage.getCorrelationId());
-			authorizationResponse.setCorrelationId(authorizationMessage.getCorrelationId());
-			return authorizationResponse;
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-		return null;
+		var authorizationMessageSerialized = new ObjectMapper().writeValueAsString(authorizationMessage);
+		var authorizationMessageJson = new JSONObject(authorizationMessageSerialized);
+		authorizationMessageJson.getJSONObject("payment").getJSONObject("creditCard")
+		                        .put("number", creditCardJson.get("number").asText());
+		var authorizationResponseJson = starkRestClient.doAuthorization(authorizationMessageJson);
+		var authorizationResponse = new ObjectMapper().readValue(authorizationResponseJson.toString(),
+		                                                         AuthorizationResponse.class);
+		authorizationResponse.setTraceabilityId(authorizationMessage.getCorrelationId());
+		authorizationResponse.setCorrelationId(authorizationMessage.getCorrelationId());
+		return authorizationResponse;
 	}
 }

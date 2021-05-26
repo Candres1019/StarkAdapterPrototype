@@ -22,22 +22,18 @@ public class CaptureUseCase implements Capture {
 		this.starkRestClient = starkRestClient;
 	}
 
-	@Override public CaptureResponse doCapture(final CaptureMessage captureMessage, final JsonNode creditCardJson) {
+	@Override public CaptureResponse doCapture(final CaptureMessage captureMessage, final JsonNode creditCardJson)
+			throws JsonProcessingException {
 
-		try {
-			var captureMessageSerialized = new ObjectMapper().writeValueAsString(captureMessage);
-			var captureMessageJson = new JSONObject(captureMessageSerialized);
-			captureMessageJson.getJSONObject("payment").getJSONObject("creditCard")
-							  .put("number", creditCardJson.get("number").asText());
-			var captureResponseJson = starkRestClient.doCapture(captureMessageJson);
-			var captureResponse = new ObjectMapper().readValue(captureResponseJson.toString(), CaptureResponse.class);
-			captureResponse.setCorrelationId(captureMessage.getCorrelationId());
-			captureResponse.setCaptureId(captureMessage.getCaptureId());
-			captureResponse.setAuthorizationTraceabilityId(captureMessage.getAuthorizationTraceabilityId());
-			return captureResponse;
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-		return null;
+		var captureMessageSerialized = new ObjectMapper().writeValueAsString(captureMessage);
+		var captureMessageJson = new JSONObject(captureMessageSerialized);
+		captureMessageJson.getJSONObject("payment").getJSONObject("creditCard")
+						  .put("number", creditCardJson.get("number").asText());
+		var captureResponseJson = starkRestClient.doCapture(captureMessageJson);
+		var captureResponse = new ObjectMapper().readValue(captureResponseJson.toString(), CaptureResponse.class);
+		captureResponse.setCorrelationId(captureMessage.getCorrelationId());
+		captureResponse.setCaptureId(captureMessage.getCaptureId());
+		captureResponse.setAuthorizationTraceabilityId(captureMessage.getAuthorizationTraceabilityId());
+		return captureResponse;
 	}
 }

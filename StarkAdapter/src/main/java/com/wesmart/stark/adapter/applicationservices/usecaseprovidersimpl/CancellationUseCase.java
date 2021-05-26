@@ -22,21 +22,17 @@ public class CancellationUseCase implements Cancellation {
 		this.starkRestClient = starkRestClient;
 	}
 
-	@Override public CancellationResponse doCancellation(final CancellationMessage cancellationMessage, final JsonNode creditCardJson) {
+	@Override public CancellationResponse doCancellation(final CancellationMessage cancellationMessage, final JsonNode creditCardJson)
+			throws JsonProcessingException {
 
-		try {
-			var cancellationMessageSerialized = new ObjectMapper().writeValueAsString(cancellationMessage);
-			var cancellationMessageJson = new JSONObject(cancellationMessageSerialized);
-			cancellationMessageJson.getJSONObject("payment").getJSONObject("creditCard")
-								   .put("number", creditCardJson.get("number").asText());
-			var cancellationResponseJSON = starkRestClient.doCancellation(cancellationMessageJson);
-			var cancellationResponse = new ObjectMapper().readValue(cancellationResponseJSON.toString(), CancellationResponse.class);
-			cancellationResponse.setCorrelationId(cancellationMessage.getCorrelationId());
-			cancellationResponse.setAuthorizationTraceabilityId(cancellationMessage.getAuthorizationTraceabilityId());
-			return cancellationResponse;
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-		return null;
+		var cancellationMessageSerialized = new ObjectMapper().writeValueAsString(cancellationMessage);
+		var cancellationMessageJson = new JSONObject(cancellationMessageSerialized);
+		cancellationMessageJson.getJSONObject("payment").getJSONObject("creditCard")
+		                       .put("number", creditCardJson.get("number").asText());
+		var cancellationResponseJSON = starkRestClient.doCancellation(cancellationMessageJson);
+		var cancellationResponse = new ObjectMapper().readValue(cancellationResponseJSON.toString(), CancellationResponse.class);
+		cancellationResponse.setCorrelationId(cancellationMessage.getCorrelationId());
+		cancellationResponse.setAuthorizationTraceabilityId(cancellationMessage.getAuthorizationTraceabilityId());
+		return cancellationResponse;
 	}
 }
