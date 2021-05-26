@@ -1,8 +1,6 @@
 package com.wesmart.stark.adapter.applicationservices.entities;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.wesmart.stark.adapter.applicationservices.utils.CaptureResponseDeserializer;
-import com.wesmart.stark.adapter.applicationservices.utils.RefundMessageSerializer;
 import com.wesmart.stark.adapter.applicationservices.utils.RefundResponseDeserializer;
 
 @JsonDeserialize(using = RefundResponseDeserializer.class)
