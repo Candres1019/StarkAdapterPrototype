@@ -1,11 +1,23 @@
-package com.smart.model.infraestructure.port.in;
+package com.prototype.wesmart.infraestructure.port.in;
 
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
 
+/**
+ * WeSmartRoutesProvider Class to consume and produce in to the ActiveMq Queue
+ *
+ * @author Andres Calderon - andres.calderon@payu.com
+ * @version 0.0.1
+ * @since 0.0.1
+ */
 @Component
 public class WeSmartRoutesProvider extends RouteBuilder {
 
+	/**
+	 * Configuration Routes to consume and produce
+	 *
+	 * @throws Exception - Exception
+	 */
 	@Override public void configure() throws Exception {
 
 		from("file:files/json/Authorization")

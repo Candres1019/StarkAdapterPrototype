@@ -11,12 +11,21 @@ import com.wesmart.stark.adapter.applicationservices.entities.AuthorizationMessa
 import com.wesmart.stark.adapter.applicationservices.entities.CancellationMessage;
 import com.wesmart.stark.adapter.applicationservices.entities.CaptureMessage;
 import com.wesmart.stark.adapter.applicationservices.entities.RefundMessage;
+import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * Defines the StarkAdapterHandler implementation
+ *
+ * @author Andres Calderon - andres.calderon@payu.com
+ * @version 0.0.1
+ * @since 0.0.1
+ */
 @Log4j2
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 @Component("starkAdapterHandlerImpl")
 public class StarkAdapterHandlerImpl implements StarkAdapterHandler {
 
@@ -26,17 +35,12 @@ public class StarkAdapterHandlerImpl implements StarkAdapterHandler {
 	private final Refund refund;
 	private final Cancellation cancellation;
 
-	@Autowired
-	public StarkAdapterHandlerImpl(UtsRequester utsRequester, Authorization authorization, Capture capture, Refund refund,
-	                               Cancellation cancellation) {
-
-		this.utsRequester = utsRequester;
-		this.authorization = authorization;
-		this.capture = capture;
-		this.refund = refund;
-		this.cancellation = cancellation;
-	}
-
+	/**
+	 * Make an authorization given an authorization message
+	 *
+	 * @param authorizationMessage - The authorization message to be processed
+	 * @return - The response of the server after processing the authorization
+	 */
 	@Override public String doAuthorization(final AuthorizationMessage authorizationMessage) {
 
 		try {
@@ -45,10 +49,16 @@ public class StarkAdapterHandlerImpl implements StarkAdapterHandler {
 			return jsonObject.toString();
 		} catch (Exception e) {
 			log.error(e.getMessage());
-			return createJsonObjectError(e).toString();
+			return createJsonObjectError(e, "AUTH").toString();
 		}
 	}
 
+	/**
+	 * Make a capture given a capture message
+	 *
+	 * @param captureMessage - The capture message to be processed
+	 * @return - The response of the server after processing the capture
+	 */
 	@Override public String doCapture(final CaptureMessage captureMessage) {
 
 		try {
@@ -57,10 +67,16 @@ public class StarkAdapterHandlerImpl implements StarkAdapterHandler {
 			return jsonObject.toString();
 		} catch (Exception e) {
 			log.error(e.getMessage());
-			return createJsonObjectError(e).toString();
+			return createJsonObjectError(e, "CAPT").toString();
 		}
 	}
 
+	/**
+	 * Make a refund given a capture message
+	 *
+	 * @param refundMessage - The capture refund to be processed
+	 * @return - The response of the server after processing the refund
+	 */
 	@Override public String doRefund(final RefundMessage refundMessage) {
 
 		try {
@@ -69,10 +85,16 @@ public class StarkAdapterHandlerImpl implements StarkAdapterHandler {
 			return jsonObject.toString();
 		} catch (Exception e) {
 			log.error(e.getMessage());
-			return createJsonObjectError(e).toString();
+			return createJsonObjectError(e, "REND").toString();
 		}
 	}
 
+	/**
+	 * Make a cancellation given a capture message
+	 *
+	 * @param cancellationMessage - The cancellation message to be processed
+	 * @return - The response of the server after processing the cancellation
+	 */
 	@Override public String doCancellation(final CancellationMessage cancellationMessage) {
 
 		try {
@@ -81,16 +103,22 @@ public class StarkAdapterHandlerImpl implements StarkAdapterHandler {
 			return jsonObject.toString();
 		} catch (Exception e) {
 			log.error(e.getMessage());
-			return createJsonObjectError(e).toString();
+			return createJsonObjectError(e, "CNL").toString();
 		}
 	}
 
-	private JSONObject createJsonObjectError(Exception e) {
+	/**
+	 * Create a JSONObject if an error occur during the execution process
+	 *
+	 * @param e - Exception caught in the process
+	 * @return - The JSONObject that represents the error
+	 */
+	private JSONObject createJsonObjectError(Exception e, String codeError) {
 
 		var errorJson = new JSONObject();
-		errorJson.put("message", "Error in the Adapter");
+		errorJson.put("message", "Error in the adapter, when processing the Transaction");
 		errorJson.put("status", "ERROR");
-		errorJson.put("transactionCode", "ERROR");
+		errorJson.put("transactionCode", codeError + "_ERROR");
 		errorJson.put("errorMessage", e.getMessage());
 		return errorJson;
 	}

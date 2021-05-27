@@ -12,6 +12,13 @@ import com.wesmart.stark.adapter.application.uts.UtsRequester;
 import org.bson.Document;
 import org.springframework.stereotype.Component;
 
+/**
+ * Defines the structure for an uts requester
+ *
+ * @author Andres Calderon - andres.calderon@payu.com
+ * @version 0.0.1
+ * @since 0.0.1
+ */
 @Component("utsRequesterImpl")
 public class UtsRequesterImpl implements UtsRequester {
 
@@ -25,6 +32,13 @@ public class UtsRequesterImpl implements UtsRequester {
 		mongoClient = new MongoClient(mongoClientURI);
 	}
 
+	/**
+	 * Make a petition to the uts app and retrieve the information of a credit card
+	 *
+	 * @param token - The token of the credit card in order to search it in the records
+	 * @return - JsonNode with the information obtained in the uts app
+	 * @throws JsonProcessingException - JsonProcessingException
+	 */
 	@Override public JsonNode getCreditCardInfo(String token) throws JsonProcessingException {
 
 		MongoDatabase database = mongoClient.getDatabase("UTS");

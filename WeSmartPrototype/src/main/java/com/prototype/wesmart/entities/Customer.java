@@ -1,4 +1,4 @@
-package com.wesmart.entities;
+package com.prototype.wesmart.entities;
 
 import java.util.Date;
 

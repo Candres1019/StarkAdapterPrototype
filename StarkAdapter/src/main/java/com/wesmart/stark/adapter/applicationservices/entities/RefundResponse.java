@@ -2,91 +2,76 @@ package com.wesmart.stark.adapter.applicationservices.entities;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.wesmart.stark.adapter.applicationservices.utils.RefundResponseDeserializer;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
+/**
+ * RefundResponse entity class
+ *
+ * @author Andres Calderon - andres.calderon@payu.com
+ * @version 0.0.1
+ * @since 0.0.1
+ */
+@Getter
+@Setter
+@NoArgsConstructor
+@RequiredArgsConstructor
 @JsonDeserialize(using = RefundResponseDeserializer.class)
 public class RefundResponse {
 
+	/**
+	 * The RefundResponse correlationId
+	 *
+	 * @param - correlationId of the RefundResponse
+	 * @return - correlationId of the RefundResponse
+	 */
 	private String correlationId;
 
+	/**
+	 * The RefundResponse captureTraceabilityId
+	 *
+	 * @param - captureTraceabilityId of the RefundResponse
+	 * @return - captureTraceabilityId of the RefundResponse
+	 */
 	private String captureTraceabilityId;
 
+	/**
+	 * The RefundResponse refundCode
+	 *
+	 * @param - refundCode of the RefundResponse
+	 * @return - refundCode of the RefundResponse
+	 */
+	@NonNull
 	private String refundCode;
 
+	/**
+	 * The RefundResponse responseCode
+	 *
+	 * @param - responseCode of the RefundResponse
+	 * @return - responseCode of the RefundResponse
+	 */
+	@NonNull
 	private String responseCode;
 
+	/**
+	 * The RefundResponse errorMessage
+	 *
+	 * @param - errorMessage of the RefundResponse
+	 * @return - errorMessage of the RefundResponse
+	 */
+	@NonNull
 	private String errorMessage;
 
+	/**
+	 * The RefundResponse message
+	 *
+	 * @param - message of the RefundResponse
+	 * @return - message of the RefundResponse
+	 */
+	@NonNull
 	private String message;
 
-	public RefundResponse() {
-
-	}
-
-	public RefundResponse(final String refundCode, final String responseCode, final String errorMessage, final String message) {
-
-		this.refundCode = refundCode;
-		this.responseCode = responseCode;
-		this.errorMessage = errorMessage;
-		this.message = message;
-	}
-
-	public String getCorrelationId() {
-
-		return correlationId;
-	}
-
-	public void setCorrelationId(final String correlationId) {
-
-		this.correlationId = correlationId;
-	}
-
-	public String getCaptureTraceabilityId() {
-
-		return captureTraceabilityId;
-	}
-
-	public void setCaptureTraceabilityId(final String captureTraceabilityId) {
-
-		this.captureTraceabilityId = captureTraceabilityId;
-	}
-
-	public String getRefundCode() {
-
-		return refundCode;
-	}
-
-	public void setRefundCode(final String refundCode) {
-
-		this.refundCode = refundCode;
-	}
-
-	public String getResponseCode() {
-
-		return responseCode;
-	}
-
-	public void setResponseCode(final String responseCode) {
-
-		this.responseCode = responseCode;
-	}
-
-	public String getErrorMessage() {
-
-		return errorMessage;
-	}
-
-	public void setErrorMessage(final String errorMessage) {
-
-		this.errorMessage = errorMessage;
-	}
-
-	public String getMessage() {
-
-		return message;
-	}
-
-	public void setMessage(final String message) {
-
-		this.message = message;
-	}
 }

@@ -4,95 +4,71 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.wesmart.entities.CreditCard;
 import com.wesmart.entities.Transaction;
 import com.wesmart.stark.adapter.applicationservices.utils.CaptureMessageSerializer;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+/**
+ * CaptureMessage entity class
+ *
+ * @author Andres Calderon - andres.calderon@payu.com
+ * @version 0.0.1
+ * @since 0.0.1
+ */
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @JsonSerialize(using = CaptureMessageSerializer.class)
 public class CaptureMessage {
 
+	/**
+	 * The CaptureMessage correlationId
+	 *
+	 * @param - correlationId of the CaptureMessage
+	 * @return - correlationId of the CaptureMessage
+	 */
 	private String correlationId;
 
+	/**
+	 * The CaptureMessage captureId
+	 *
+	 * @param - captureId of the CaptureMessage
+	 * @return - captureId of the CaptureMessage
+	 */
 	private String captureId;
 
+	/**
+	 * The CaptureMessage authorizationTraceabilityId
+	 *
+	 * @param - authorizationTraceabilityId of the CaptureMessage
+	 * @return - authorizationTraceabilityId of the CaptureMessage
+	 */
 	private String authorizationTraceabilityId;
 
+	/**
+	 * The CaptureMessage authorizationCode
+	 *
+	 * @param - authorizationCode of the CaptureMessage
+	 * @return - authorizationCode of the CaptureMessage
+	 */
 	private String authorizationCode;
 
+	/**
+	 * The CaptureMessage transaction
+	 *
+	 * @param - transaction of the CaptureMessage
+	 * @return - transaction of the CaptureMessage
+	 */
 	private Transaction transaction;
 
+	/**
+	 * The CaptureMessage creditCard
+	 *
+	 * @param - creditCard of the CaptureMessage
+	 * @return - creditCard of the CaptureMessage
+	 */
 	private CreditCard creditCard;
 
-	public CaptureMessage() {
-
-	}
-
-	public CaptureMessage(final String correlationId, final String captureId, final String authorizationTraceabilityId,
-						  final String authorizationCode,
-						  final Transaction transaction, final CreditCard creditCard) {
-
-		this.correlationId = correlationId;
-		this.captureId = captureId;
-		this.authorizationTraceabilityId = authorizationTraceabilityId;
-		this.authorizationCode = authorizationCode;
-		this.transaction = transaction;
-		this.creditCard = creditCard;
-	}
-
-	public String getCorrelationId() {
-
-		return correlationId;
-	}
-
-	public void setCorrelationId(final String correlationId) {
-
-		this.correlationId = correlationId;
-	}
-
-	public String getCaptureId() {
-
-		return captureId;
-	}
-
-	public void setCaptureId(final String captureId) {
-
-		this.captureId = captureId;
-	}
-
-	public String getAuthorizationTraceabilityId() {
-
-		return authorizationTraceabilityId;
-	}
-
-	public void setAuthorizationTraceabilityId(final String authorizationTraceabilityId) {
-
-		this.authorizationTraceabilityId = authorizationTraceabilityId;
-	}
-
-	public String getAuthorizationCode() {
-
-		return authorizationCode;
-	}
-
-	public void setAuthorizationCode(final String authorizationCode) {
-
-		this.authorizationCode = authorizationCode;
-	}
-
-	public Transaction getTransaction() {
-
-		return transaction;
-	}
-
-	public void setTransaction(final Transaction transaction) {
-
-		this.transaction = transaction;
-	}
-
-	public CreditCard getCreditCard() {
-
-		return creditCard;
-	}
-
-	public void setCreditCard(final CreditCard creditCard) {
-
-		this.creditCard = creditCard;
-	}
 }

@@ -2,103 +2,84 @@ package com.wesmart.stark.adapter.applicationservices.entities;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.wesmart.stark.adapter.applicationservices.utils.CaptureResponseDeserializer;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
+/**
+ * CaptureResponse entity class
+ *
+ * @author Andres Calderon - andres.calderon@payu.com
+ * @version 0.0.1
+ * @since 0.0.1
+ */
+@Getter
+@Setter
+@NoArgsConstructor
+@RequiredArgsConstructor
 @JsonDeserialize(using = CaptureResponseDeserializer.class)
 public class CaptureResponse {
 
+	/**
+	 * The CaptureResponse correlationId
+	 *
+	 * @param - correlationId of the CaptureResponse
+	 * @return - correlationId of the CaptureResponse
+	 */
 	private String correlationId;
 
+	/**
+	 * The CaptureResponse captureId
+	 *
+	 * @param - captureId of the CaptureResponse
+	 * @return - captureId of the CaptureResponse
+	 */
 	private String captureId;
 
+	/**
+	 * The CaptureResponse authorizationTraceabilityId
+	 *
+	 * @param - authorizationTraceabilityId of the CaptureResponse
+	 * @return - authorizationTraceabilityId of the CaptureResponse
+	 */
 	private String authorizationTraceabilityId;
 
+	/**
+	 * The CaptureResponse captureCode
+	 *
+	 * @param - captureCode of the CaptureResponse
+	 * @return - captureCode of the CaptureResponse
+	 */
+	@NonNull
 	private String captureCode;
 
+	/**
+	 * The CaptureResponse responseCode
+	 *
+	 * @param - responseCode of the CaptureResponse
+	 * @return - responseCode of the CaptureResponse
+	 */
+	@NonNull
 	private String responseCode;
 
+	/**
+	 * The CaptureResponse errorMessage
+	 *
+	 * @param - errorMessage of the CaptureResponse
+	 * @return - errorMessage of the CaptureResponse
+	 */
+	@NonNull
 	private String errorMessage;
 
+	/**
+	 * The CaptureResponse message
+	 *
+	 * @param - message of the CaptureResponse
+	 * @return - message of the CaptureResponse
+	 */
+	@NonNull
 	private String message;
 
-	public CaptureResponse() {
-
-	}
-
-	public CaptureResponse(final String captureCode, final String responseCode, final String errorMessage, final String message) {
-
-		this.captureCode = captureCode;
-		this.responseCode = responseCode;
-		this.errorMessage = errorMessage;
-		this.message = message;
-	}
-
-	public String getCorrelationId() {
-
-		return correlationId;
-	}
-
-	public void setCorrelationId(final String correlationId) {
-
-		this.correlationId = correlationId;
-	}
-
-	public String getCaptureId() {
-
-		return captureId;
-	}
-
-	public void setCaptureId(final String captureId) {
-
-		this.captureId = captureId;
-	}
-
-	public String getAuthorizationTraceabilityId() {
-
-		return authorizationTraceabilityId;
-	}
-
-	public void setAuthorizationTraceabilityId(final String authorizationTraceabilityId) {
-
-		this.authorizationTraceabilityId = authorizationTraceabilityId;
-	}
-
-	public String getCaptureCode() {
-
-		return captureCode;
-	}
-
-	public void setCaptureCode(final String captureCode) {
-
-		this.captureCode = captureCode;
-	}
-
-	public String getResponseCode() {
-
-		return responseCode;
-	}
-
-	public void setResponseCode(final String responseCode) {
-
-		this.responseCode = responseCode;
-	}
-
-	public String getErrorMessage() {
-
-		return errorMessage;
-	}
-
-	public void setErrorMessage(final String errorMessage) {
-
-		this.errorMessage = errorMessage;
-	}
-
-	public String getMessage() {
-
-		return message;
-	}
-
-	public void setMessage(final String message) {
-
-		this.message = message;
-	}
 }

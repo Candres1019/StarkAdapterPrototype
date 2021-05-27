@@ -7,18 +7,41 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.wesmart.stark.adapter.applicationservices.entities.CaptureMessage;
 
+/**
+ * Defines the form to map a CaptureMessage to a JSONObject
+ *
+ * @author Andres Calderon - andres.calderon@payu.com
+ * @version 0.0.1
+ * @since 0.0.1
+ */
 public class CaptureMessageSerializer extends StdSerializer<CaptureMessage> {
 
+	/**
+	 * The default constructor of a StdSerializer
+	 */
 	public CaptureMessageSerializer() {
 
 		this(null);
 	}
 
+	/**
+	 * The default constructor of a StdSerializer for a CaptureMessage Object
+	 *
+	 * @param t - Class of type CaptureMessage
+	 */
 	public CaptureMessageSerializer(Class<CaptureMessage> t) {
 
 		super(t);
 	}
 
+	/**
+	 * Defines the way to map(serialize) a CaptureMessage
+	 *
+	 * @param captureMessage - CaptureMessage to serialize
+	 * @param jsonGenerator        - JsonGenerator
+	 * @param serializerProvider   - SerializerProvider
+	 * @throws IOException - IOException
+	 */
 	@Override public void serialize(final CaptureMessage captureMessage, final JsonGenerator jsonGenerator,
 	                                final SerializerProvider serializerProvider) throws IOException {
 

@@ -7,18 +7,41 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.wesmart.stark.adapter.applicationservices.entities.RefundMessage;
 
+/**
+ * Defines the form to map a RefundMessage to a JSONObject
+ *
+ * @author Andres Calderon - andres.calderon@payu.com
+ * @version 0.0.1
+ * @since 0.0.1
+ */
 public class RefundMessageSerializer extends StdSerializer<RefundMessage> {
 
+	/**
+	 * The default constructor of a StdSerializer
+	 */
 	public RefundMessageSerializer() {
 
 		this(null);
 	}
 
+	/**
+	 * The default constructor of a StdSerializer for a RefundMessage Object
+	 *
+	 * @param t - Class of type RefundMessage
+	 */
 	public RefundMessageSerializer(Class<RefundMessage> t) {
 
 		super(t);
 	}
 
+	/**
+	 * Defines the way to map(serialize) a RefundMessage
+	 *
+	 * @param refundMessage - RefundMessage to serialize
+	 * @param jsonGenerator        - JsonGenerator
+	 * @param serializerProvider   - SerializerProvider
+	 * @throws IOException - IOException
+	 */
 	@Override
 	public void serialize(final RefundMessage refundMessage, final JsonGenerator jsonGenerator, final SerializerProvider serializerProvider)
 			throws IOException {

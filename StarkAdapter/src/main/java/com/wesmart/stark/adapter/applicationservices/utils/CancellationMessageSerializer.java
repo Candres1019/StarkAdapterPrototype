@@ -7,18 +7,41 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.wesmart.stark.adapter.applicationservices.entities.CancellationMessage;
 
+/**
+ * Defines the form to map a CancellationMessage to a JSONObject
+ *
+ * @author Andres Calderon - andres.calderon@payu.com
+ * @version 0.0.1
+ * @since 0.0.1
+ */
 public class CancellationMessageSerializer extends StdSerializer<CancellationMessage> {
 
+	/**
+	 * The default constructor of a StdSerializer
+	 */
 	public CancellationMessageSerializer() {
 
 		this(null);
 	}
 
+	/**
+	 * The default constructor of a StdSerializer for a CancellationMessage Object
+	 *
+	 * @param t - Class of type CancellationMessage
+	 */
 	public CancellationMessageSerializer(Class<CancellationMessage> t) {
 
 		super(t);
 	}
 
+	/**
+	 * Defines the way to map(serialize) a CancellationMessage
+	 *
+	 * @param cancellationMessage - CancellationMessage to serialize
+	 * @param jsonGenerator       - JsonGenerator
+	 * @param serializerProvider  - SerializerProvider
+	 * @throws IOException - IOException
+	 */
 	@Override public void serialize(final CancellationMessage cancellationMessage, final JsonGenerator jsonGenerator,
 	                                final SerializerProvider serializerProvider) throws IOException {
 

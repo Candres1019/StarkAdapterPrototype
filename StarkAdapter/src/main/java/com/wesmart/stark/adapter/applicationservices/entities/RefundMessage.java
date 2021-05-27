@@ -6,101 +6,79 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.wesmart.entities.CreditCard;
 import com.wesmart.entities.Transaction;
 import com.wesmart.stark.adapter.applicationservices.utils.RefundMessageSerializer;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+/**
+ * RefundMessage entity class
+ *
+ * @author Andres Calderon - andres.calderon@payu.com
+ * @version 0.0.1
+ * @since 0.0.1
+ */
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @JsonSerialize(using = RefundMessageSerializer.class)
 public class RefundMessage {
 
+	/**
+	 * The RefundMessage correlationId
+	 *
+	 * @param - correlationId of the RefundMessage
+	 * @return - correlationId of the RefundMessage
+	 */
 	private String correlationId;
+
+	/**
+	 * The RefundMessage refundId
+	 *
+	 * @param - refundId of the RefundMessage
+	 * @return - refundId of the RefundMessage
+	 */
 	private String refundId;
+
+	/**
+	 * The RefundMessage captureTraceabilityId
+	 *
+	 * @param - captureTraceabilityId of the RefundMessage
+	 * @return - captureTraceabilityId of the RefundMessage
+	 */
 	private String captureTraceabilityId;
+
+	/**
+	 * The RefundMessage refundCode
+	 *
+	 * @param - refundCode of the RefundMessage
+	 * @return - refundCode of the RefundMessage
+	 */
 	private String refundCode;
+
+	/**
+	 * The RefundMessage transaction
+	 *
+	 * @param - transaction of the RefundMessage
+	 * @return - transaction of the RefundMessage
+	 */
 	private Transaction transaction;
+
+	/**
+	 * The RefundMessage creditCard
+	 *
+	 * @param - creditCard of the RefundMessage
+	 * @return - creditCard of the RefundMessage
+	 */
 	private CreditCard creditCard;
+
+	/**
+	 * The RefundMessage maxRefundDate
+	 *
+	 * @param - maxRefundDate of the RefundMessage
+	 * @return - maxRefundDate of the RefundMessage
+	 */
 	private Date maxRefundDate;
 
-	public RefundMessage() {
-
-	}
-
-	public RefundMessage(final String correlationId, final String refundId, final String captureTraceabilityId, final String refundCode,
-						 final Transaction transaction, final CreditCard creditCard, final Date maxRefundDate) {
-
-		this.correlationId = correlationId;
-		this.refundId = refundId;
-		this.captureTraceabilityId = captureTraceabilityId;
-		this.refundCode = refundCode;
-		this.transaction = transaction;
-		this.creditCard = creditCard;
-		this.maxRefundDate = maxRefundDate;
-	}
-
-	public String getCorrelationId() {
-
-		return correlationId;
-	}
-
-	public void setCorrelationId(final String correlationId) {
-
-		this.correlationId = correlationId;
-	}
-
-	public String getRefundId() {
-
-		return refundId;
-	}
-
-	public void setRefundId(final String refundId) {
-
-		this.refundId = refundId;
-	}
-
-	public String getCaptureTraceabilityId() {
-
-		return captureTraceabilityId;
-	}
-
-	public void setCaptureTraceabilityId(final String captureTraceabilityId) {
-
-		this.captureTraceabilityId = captureTraceabilityId;
-	}
-
-	public String getRefundCode() {
-
-		return refundCode;
-	}
-
-	public void setRefundCode(final String refundCode) {
-
-		this.refundCode = refundCode;
-	}
-
-	public Transaction getTransaction() {
-
-		return transaction;
-	}
-
-	public void setTransaction(final Transaction transaction) {
-
-		this.transaction = transaction;
-	}
-
-	public CreditCard getCreditCard() {
-
-		return creditCard;
-	}
-
-	public void setCreditCard(final CreditCard creditCard) {
-
-		this.creditCard = creditCard;
-	}
-
-	public Date getMaxRefundDate() {
-
-		return maxRefundDate;
-	}
-
-	public void setMaxRefundDate(final Date maxRefundDate) {
-
-		this.maxRefundDate = maxRefundDate;
-	}
 }

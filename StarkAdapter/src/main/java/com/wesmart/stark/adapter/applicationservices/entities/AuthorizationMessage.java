@@ -4,68 +4,55 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.wesmart.entities.CreditCard;
 import com.wesmart.entities.Transaction;
 import com.wesmart.stark.adapter.applicationservices.utils.AuthorizationMessageSerializer;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+/**
+ * AuthorizationMessage entity class
+ *
+ * @author Andres Calderon - andres.calderon@payu.com
+ * @version 0.0.1
+ * @since 0.0.1
+ */
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @JsonSerialize(using = AuthorizationMessageSerializer.class)
 public class AuthorizationMessage {
 
+	/**
+	 * The AuthorizationMessage correlationId
+	 *
+	 * @param - correlationId of the AuthorizationMessage
+	 * @return - correlationId of the AuthorizationMessage
+	 */
 	private String correlationId;
 
+	/**
+	 * The AuthorizationMessage authorizationId
+	 *
+	 * @param - authorizationId of the AuthorizationMessage
+	 * @return - authorizationId of the AuthorizationMessage
+	 */
 	private String authorizationId;
 
+	/**
+	 * The AuthorizationMessage transaction
+	 *
+	 * @param - transaction of the AuthorizationMessage
+	 * @return - transaction of the AuthorizationMessage
+	 */
 	private Transaction transaction;
 
+	/**
+	 * The AuthorizationMessage creditCard
+	 *
+	 * @param - creditCard of the AuthorizationMessage
+	 * @return - creditCard of the AuthorizationMessage
+	 */
 	private CreditCard creditCard;
 
-	public AuthorizationMessage() {
-
-	}
-
-	public AuthorizationMessage(final String correlationId, final String authorizationId, final Transaction transaction,
-								final CreditCard creditCard) {
-
-		this.correlationId = correlationId;
-		this.authorizationId = authorizationId;
-		this.transaction = transaction;
-		this.creditCard = creditCard;
-	}
-
-	public String getCorrelationId() {
-
-		return correlationId;
-	}
-
-	public void setCorrelationId(final String correlationId) {
-
-		this.correlationId = correlationId;
-	}
-
-	public String getAuthorizationId() {
-
-		return authorizationId;
-	}
-
-	public void setAuthorizationId(final String authorizationId) {
-
-		this.authorizationId = authorizationId;
-	}
-
-	public Transaction getTransaction() {
-
-		return transaction;
-	}
-
-	public void setTransaction(final Transaction transaction) {
-
-		this.transaction = transaction;
-	}
-
-	public CreditCard getCreditCard() {
-
-		return creditCard;
-	}
-
-	public void setCreditCard(final CreditCard creditCard) {
-
-		this.creditCard = creditCard;
-	}
 }
