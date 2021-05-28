@@ -1,6 +1,7 @@
 package com.wesmart.stark.adapter.applicationservices.handlerimpl;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wesmart.stark.adapter.application.handler.StarkAdapterHandler;
 import com.wesmart.stark.adapter.application.usecaseproviders.Authorization;
 import com.wesmart.stark.adapter.application.usecaseproviders.Cancellation;
@@ -45,8 +46,7 @@ public class StarkAdapterHandlerImpl implements StarkAdapterHandler {
 
 		try {
 			JsonNode creditCardJson = utsRequester.getCreditCardInfo(authorizationMessage.getCreditCard().getToken());
-			var jsonObject = new JSONObject(authorization.doAuthorization(authorizationMessage, creditCardJson));
-			return jsonObject.toString();
+			return new ObjectMapper().writeValueAsString(authorization.doAuthorization(authorizationMessage, creditCardJson));
 		} catch (Exception e) {
 			log.error(e.getMessage());
 			return createJsonObjectError(e, "AUTH").toString();
@@ -63,9 +63,9 @@ public class StarkAdapterHandlerImpl implements StarkAdapterHandler {
 
 		try {
 			JsonNode creditCardJson = utsRequester.getCreditCardInfo(captureMessage.getCreditCard().getToken());
-			var jsonObject = new JSONObject(capture.doCapture(captureMessage, creditCardJson));
-			return jsonObject.toString();
+			return new ObjectMapper().writeValueAsString(capture.doCapture(captureMessage, creditCardJson));
 		} catch (Exception e) {
+			e.printStackTrace();
 			log.error(e.getMessage());
 			return createJsonObjectError(e, "CAPT").toString();
 		}
@@ -81,8 +81,7 @@ public class StarkAdapterHandlerImpl implements StarkAdapterHandler {
 
 		try {
 			JsonNode creditCardJson = utsRequester.getCreditCardInfo(refundMessage.getCreditCard().getToken());
-			var jsonObject = new JSONObject(refund.doRefund(refundMessage, creditCardJson));
-			return jsonObject.toString();
+			return new ObjectMapper().writeValueAsString(refund.doRefund(refundMessage, creditCardJson));
 		} catch (Exception e) {
 			log.error(e.getMessage());
 			return createJsonObjectError(e, "REND").toString();
@@ -99,8 +98,7 @@ public class StarkAdapterHandlerImpl implements StarkAdapterHandler {
 
 		try {
 			JsonNode creditCardJson = utsRequester.getCreditCardInfo(cancellationMessage.getCreditCard().getToken());
-			var jsonObject = new JSONObject(cancellation.doCancellation(cancellationMessage, creditCardJson));
-			return jsonObject.toString();
+			return new ObjectMapper().writeValueAsString(cancellation.doCancellation(cancellationMessage, creditCardJson));
 		} catch (Exception e) {
 			log.error(e.getMessage());
 			return createJsonObjectError(e, "CNL").toString();
