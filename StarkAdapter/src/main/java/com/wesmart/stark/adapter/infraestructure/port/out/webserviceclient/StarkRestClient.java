@@ -30,7 +30,6 @@ public class StarkRestClient {
 		errorJson = new JSONObject();
 		errorJson.put("message", "Transaction Error");
 		errorJson.put("status", "ERROR");
-		errorJson.put("authorizationCode", "ERROR");
 	}
 
 	/**
@@ -51,6 +50,7 @@ public class StarkRestClient {
 			return new JSONObject(response.body().string());
 		} catch (Exception e) {
 			errorJson.put(ERROR_MESSAGE, e.getMessage());
+			errorJson.put("authorizationCode", "ERROR");
 			return errorJson;
 		}
 	}
@@ -73,6 +73,7 @@ public class StarkRestClient {
 			return new JSONObject(response.body().string());
 		} catch (Exception e) {
 			errorJson.put(ERROR_MESSAGE, e.getMessage());
+			errorJson.put("captureCode", "ERROR");
 			return errorJson;
 		}
 	}
@@ -95,6 +96,7 @@ public class StarkRestClient {
 			return new JSONObject(response.body().string());
 		} catch (Exception e) {
 			errorJson.put(ERROR_MESSAGE, e.getMessage());
+			errorJson.put("voidCode", "ERROR");
 			return errorJson;
 		}
 	}
@@ -117,6 +119,7 @@ public class StarkRestClient {
 			return new JSONObject(response.body().string());
 		} catch (Exception e) {
 			errorJson.put(ERROR_MESSAGE, e.getMessage());
+			errorJson.put("refundCode", "ERROR");
 			return errorJson;
 		}
 	}
