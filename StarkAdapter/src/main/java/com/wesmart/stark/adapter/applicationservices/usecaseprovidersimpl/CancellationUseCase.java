@@ -3,7 +3,7 @@ package com.wesmart.stark.adapter.applicationservices.usecaseprovidersimpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.wesmart.stark.adapter.application.usecaseproviders.Cancellation;
+import com.wesmart.stark.adapter.application.in.usecaseproviders.Cancellation;
 import com.wesmart.stark.adapter.applicationservices.entities.CancellationMessage;
 import com.wesmart.stark.adapter.applicationservices.entities.CancellationResponse;
 import com.wesmart.stark.adapter.infraestructure.port.out.webserviceclient.StarkRestClient;

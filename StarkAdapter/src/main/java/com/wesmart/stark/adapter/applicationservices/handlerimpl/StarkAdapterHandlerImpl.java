@@ -2,12 +2,12 @@ package com.wesmart.stark.adapter.applicationservices.handlerimpl;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.wesmart.stark.adapter.application.handler.StarkAdapterHandler;
-import com.wesmart.stark.adapter.application.usecaseproviders.Authorization;
-import com.wesmart.stark.adapter.application.usecaseproviders.Cancellation;
-import com.wesmart.stark.adapter.application.usecaseproviders.Capture;
-import com.wesmart.stark.adapter.application.usecaseproviders.Refund;
-import com.wesmart.stark.adapter.application.uts.UtsRequester;
+import com.wesmart.stark.adapter.application.in.handler.StarkAdapterHandler;
+import com.wesmart.stark.adapter.application.in.usecaseproviders.Authorization;
+import com.wesmart.stark.adapter.application.in.usecaseproviders.Cancellation;
+import com.wesmart.stark.adapter.application.in.usecaseproviders.Capture;
+import com.wesmart.stark.adapter.application.in.usecaseproviders.Refund;
+import com.wesmart.stark.adapter.application.out.creditcardreq.CreditCardRequester;
 import com.wesmart.stark.adapter.applicationservices.entities.AuthorizationMessage;
 import com.wesmart.stark.adapter.applicationservices.entities.CancellationMessage;
 import com.wesmart.stark.adapter.applicationservices.entities.CaptureMessage;
@@ -30,7 +30,7 @@ import org.springframework.stereotype.Component;
 @Component("starkAdapterHandlerImpl")
 public class StarkAdapterHandlerImpl implements StarkAdapterHandler {
 
-	private final UtsRequester utsRequester;
+	private final CreditCardRequester utsRequester;
 	private final Authorization authorization;
 	private final Capture capture;
 	private final Refund refund;

@@ -1,6 +1,6 @@
 package com.wesmart.stark.adapter.infraestructure.port.in.messagebroker;
 
-import com.wesmart.stark.adapter.application.handler.StarkAdapterHandler;
+import com.wesmart.stark.adapter.application.in.handler.StarkAdapterHandler;
 import com.wesmart.stark.adapter.applicationservices.entities.AuthorizationMessage;
 import com.wesmart.stark.adapter.applicationservices.entities.CancellationMessage;
 import com.wesmart.stark.adapter.applicationservices.entities.CaptureMessage;

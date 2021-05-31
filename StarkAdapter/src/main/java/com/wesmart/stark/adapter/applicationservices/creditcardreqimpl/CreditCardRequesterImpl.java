@@ -1,4 +1,4 @@
-package com.wesmart.stark.adapter.applicationservices.utsimpl;
+package com.wesmart.stark.adapter.applicationservices.creditcardreqimpl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -8,7 +8,7 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import com.wesmart.stark.adapter.application.uts.UtsRequester;
+import com.wesmart.stark.adapter.application.out.creditcardreq.CreditCardRequester;
 import org.bson.Document;
 import org.springframework.stereotype.Component;
 
@@ -20,11 +20,11 @@ import org.springframework.stereotype.Component;
  * @since 0.0.1
  */
 @Component("utsRequesterImpl")
-public class UtsRequesterImpl implements UtsRequester {
+public class CreditCardRequesterImpl implements CreditCardRequester {
 
 	private final MongoClient mongoClient;
 
-	public UtsRequesterImpl() {
+	public CreditCardRequesterImpl() {
 
 		var mongoClientURI = new MongoClientURI(
 				"mongodb+srv://andres:d6ahdcenn39v@uts.l756p.mongodb.net/UTS?retryWrites=true&w=majority");

@@ -1,4 +1,4 @@
-package com.wesmart.stark.adapter.application.handler;
+package com.wesmart.stark.adapter.application.in.handler;
 
 import com.wesmart.stark.adapter.applicationservices.entities.AuthorizationMessage;
 import com.wesmart.stark.adapter.applicationservices.entities.CancellationMessage;

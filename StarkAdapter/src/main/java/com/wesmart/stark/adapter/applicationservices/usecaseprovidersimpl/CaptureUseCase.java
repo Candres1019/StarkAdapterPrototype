@@ -3,7 +3,7 @@ package com.wesmart.stark.adapter.applicationservices.usecaseprovidersimpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.wesmart.stark.adapter.application.usecaseproviders.Capture;
+import com.wesmart.stark.adapter.application.in.usecaseproviders.Capture;
 import com.wesmart.stark.adapter.applicationservices.entities.CaptureMessage;
 import com.wesmart.stark.adapter.applicationservices.entities.CaptureResponse;
 import com.wesmart.stark.adapter.infraestructure.port.out.webserviceclient.StarkRestClient;

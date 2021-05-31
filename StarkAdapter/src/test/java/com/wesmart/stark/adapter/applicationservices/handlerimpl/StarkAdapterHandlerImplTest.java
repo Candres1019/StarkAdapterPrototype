@@ -2,7 +2,7 @@ package com.wesmart.stark.adapter.applicationservices.handlerimpl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.wesmart.stark.adapter.application.handler.StarkAdapterHandler;
+import com.wesmart.stark.adapter.application.in.handler.StarkAdapterHandler;
 import com.wesmart.stark.adapter.applicationservices.entities.AuthorizationMessage;
 import com.wesmart.stark.adapter.applicationservices.entities.CancellationMessage;
 import com.wesmart.stark.adapter.applicationservices.entities.CaptureMessage;

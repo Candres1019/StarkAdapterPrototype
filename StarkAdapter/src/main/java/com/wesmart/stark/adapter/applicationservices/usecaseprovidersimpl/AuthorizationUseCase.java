@@ -3,7 +3,7 @@ package com.wesmart.stark.adapter.applicationservices.usecaseprovidersimpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.wesmart.stark.adapter.application.usecaseproviders.Authorization;
+import com.wesmart.stark.adapter.application.in.usecaseproviders.Authorization;
 import com.wesmart.stark.adapter.applicationservices.entities.AuthorizationMessage;
 import com.wesmart.stark.adapter.applicationservices.entities.AuthorizationResponse;
 import com.wesmart.stark.adapter.infraestructure.port.out.webserviceclient.StarkRestClient;

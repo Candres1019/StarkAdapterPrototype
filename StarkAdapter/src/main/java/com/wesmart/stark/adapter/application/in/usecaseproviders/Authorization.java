@@ -1,4 +1,4 @@
-package com.wesmart.stark.adapter.application.usecaseproviders;
+package com.wesmart.stark.adapter.application.in.usecaseproviders;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
