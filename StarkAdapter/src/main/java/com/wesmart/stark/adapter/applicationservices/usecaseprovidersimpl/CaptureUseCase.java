@@ -36,12 +36,12 @@ public class CaptureUseCase implements Capture {
 	@Override public CaptureResponse doCapture(final CaptureMessage captureMessage, final JsonNode creditCardJson)
 			throws JsonProcessingException {
 
-		var captureMessageSerialized = new ObjectMapper().writeValueAsString(captureMessage);
-		var captureMessageJson = new JSONObject(captureMessageSerialized);
+		String captureMessageSerialized = new ObjectMapper().writeValueAsString(captureMessage);
+		JSONObject captureMessageJson = new JSONObject(captureMessageSerialized);
 		captureMessageJson.getJSONObject("payment").getJSONObject("creditCard")
 		                  .put("number", creditCardJson.get("number").asText());
-		var captureResponseJson = starkRestClient.doCapture(captureMessageJson);
-		var captureResponse = new ObjectMapper().readValue(captureResponseJson.toString(), CaptureResponse.class);
+		JSONObject captureResponseJson = starkRestClient.doCapture(captureMessageJson);
+		CaptureResponse captureResponse = new ObjectMapper().readValue(captureResponseJson.toString(), CaptureResponse.class);
 		captureResponse.setCorrelationId(captureMessage.getCorrelationId());
 		captureResponse.setCaptureId(captureMessage.getCaptureId());
 		captureResponse.setAuthorizationTraceabilityId(captureMessage.getAuthorizationTraceabilityId());

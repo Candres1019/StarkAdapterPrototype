@@ -10,6 +10,8 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.wesmart.stark.adapter.application.out.creditcardreq.CreditCardRequester;
 import org.bson.Document;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
@@ -23,12 +25,17 @@ import org.springframework.stereotype.Component;
 public class CreditCardRequesterImpl implements CreditCardRequester {
 
 	private final MongoClient mongoClient;
+	@Value("${spring.data.mongodb.database}")
+	private String databaseName;
+	@Value("${spring.data.mongodb.collection}")
+	private String collectionName;
+	@Value("${spring.data.mongodb.token-field}")
+	private String tokenField;
 
-	public CreditCardRequesterImpl() {
+	@Autowired
+	public CreditCardRequesterImpl(@Value("${spring.data.mongodb.uri}") String mongoUri) {
 
-		var mongoClientURI = new MongoClientURI(
-				"mongodb+srv://andres:d6ahdcenn39v@uts.l756p.mongodb.net/UTS?retryWrites=true&w=majority");
-
+		MongoClientURI mongoClientURI = new MongoClientURI(mongoUri);
 		mongoClient = new MongoClient(mongoClientURI);
 	}
 
@@ -41,12 +48,12 @@ public class CreditCardRequesterImpl implements CreditCardRequester {
 	 */
 	@Override public JsonNode getCreditCardInfo(String token) throws JsonProcessingException {
 
-		MongoDatabase database = mongoClient.getDatabase("UTS");
-		MongoCollection<Document> collections = database.getCollection("UTS");
-		var query = new BasicDBObject();
-		query.put("token", token);
+		MongoDatabase database = mongoClient.getDatabase(databaseName);
+		MongoCollection<Document> collections = database.getCollection(collectionName);
+		BasicDBObject query = new BasicDBObject();
+		query.put(tokenField, token);
 		Document creditCard = collections.find(query).first();
-		var objectMapper = new ObjectMapper();
+		ObjectMapper objectMapper = new ObjectMapper();
 		if (creditCard != null) {
 			return objectMapper.readTree(creditCard.toJson());
 		} else {

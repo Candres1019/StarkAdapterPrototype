@@ -36,13 +36,13 @@ public class AuthorizationUseCase implements Authorization {
 	@Override public AuthorizationResponse doAuthorization(final AuthorizationMessage authorizationMessage, final JsonNode creditCardJson)
 			throws JsonProcessingException {
 
-		var authorizationMessageSerialized = new ObjectMapper().writeValueAsString(authorizationMessage);
-		var authorizationMessageJson = new JSONObject(authorizationMessageSerialized);
+		String authorizationMessageSerialized = new ObjectMapper().writeValueAsString(authorizationMessage);
+		JSONObject authorizationMessageJson = new JSONObject(authorizationMessageSerialized);
 		authorizationMessageJson.getJSONObject("payment").getJSONObject("creditCard")
 		                        .put("number", creditCardJson.get("number").asText());
-		var authorizationResponseJson = starkRestClient.doAuthorization(authorizationMessageJson);
-		var authorizationResponse = new ObjectMapper().readValue(authorizationResponseJson.toString(),
-		                                                         AuthorizationResponse.class);
+		JSONObject authorizationResponseJson = starkRestClient.doAuthorization(authorizationMessageJson);
+		AuthorizationResponse authorizationResponse = new ObjectMapper().readValue(authorizationResponseJson.toString(),
+		                                                                           AuthorizationResponse.class);
 		authorizationResponse.setTraceabilityId(authorizationMessage.getCorrelationId());
 		authorizationResponse.setCorrelationId(authorizationMessage.getCorrelationId());
 		return authorizationResponse;

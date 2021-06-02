@@ -36,12 +36,13 @@ public class CancellationUseCase implements Cancellation {
 	@Override public CancellationResponse doCancellation(final CancellationMessage cancellationMessage, final JsonNode creditCardJson)
 			throws JsonProcessingException {
 
-		var cancellationMessageSerialized = new ObjectMapper().writeValueAsString(cancellationMessage);
-		var cancellationMessageJson = new JSONObject(cancellationMessageSerialized);
+		String cancellationMessageSerialized = new ObjectMapper().writeValueAsString(cancellationMessage);
+		JSONObject cancellationMessageJson = new JSONObject(cancellationMessageSerialized);
 		cancellationMessageJson.getJSONObject("payment").getJSONObject("creditCard")
 		                       .put("number", creditCardJson.get("number").asText());
-		var cancellationResponseJSON = starkRestClient.doCancellation(cancellationMessageJson);
-		var cancellationResponse = new ObjectMapper().readValue(cancellationResponseJSON.toString(), CancellationResponse.class);
+		JSONObject cancellationResponseJSON = starkRestClient.doCancellation(cancellationMessageJson);
+		CancellationResponse cancellationResponse = new ObjectMapper()
+				.readValue(cancellationResponseJSON.toString(), CancellationResponse.class);
 		cancellationResponse.setCorrelationId(cancellationMessage.getCorrelationId());
 		cancellationResponse.setAuthorizationTraceabilityId(cancellationMessage.getAuthorizationTraceabilityId());
 		return cancellationResponse;

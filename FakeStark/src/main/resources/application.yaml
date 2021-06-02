@@ -1,0 +1,31 @@
+spring:
+  profiles.active: default
+---
+server:
+  port: 8002
+spring:
+  profiles: default
+  datasource:
+    url: jdbc:h2:mem:fake_stark;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE
+    driver-class-name: org.h2.Driver
+    username: andres
+    password: andres.password
+    schema: classpath:/sql/schema.sql
+    data: classpath:/sql/data.sql
+    initialization-mode: always
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      settings:
+        web-allow-others: true
+      enabled: true
+      path: /h2
+mybatis:
+  config-location: classpath:mybatis-config.xml
+
+logging:
+  level:
+    com:
+      autentia:
+        mappers: TRACE

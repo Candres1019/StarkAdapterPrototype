@@ -7,8 +7,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.4.5</version>
-		<relativePath/>
+		<version>2.3.11.RELEASE</version>
 	</parent>
 
 	<groupId>com.wesmart.stark.adapter</groupId>
@@ -94,6 +93,11 @@
 			<artifactId>junit</artifactId>
 			<version>4.13.1</version>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.yaml</groupId>
+			<artifactId>snakeyaml</artifactId>
+			<version>1.28</version>
 		</dependency>
 	</dependencies>
 

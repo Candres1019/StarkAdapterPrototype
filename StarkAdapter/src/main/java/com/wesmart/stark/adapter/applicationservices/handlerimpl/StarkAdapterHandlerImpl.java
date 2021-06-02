@@ -113,7 +113,7 @@ public class StarkAdapterHandlerImpl implements StarkAdapterHandler {
 	 */
 	private JSONObject createJsonObjectError(Exception e, String codeError) {
 
-		var errorJson = new JSONObject();
+		JSONObject errorJson = new JSONObject();
 		errorJson.put("message", "Error in the adapter, when processing the Transaction");
 		errorJson.put("status", "ERROR");
 		errorJson.put("transactionCode", codeError + "_ERROR");

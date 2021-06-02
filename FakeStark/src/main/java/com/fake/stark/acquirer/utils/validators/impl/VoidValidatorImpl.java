@@ -1,5 +1,7 @@
 package com.fake.stark.acquirer.utils.validators.impl;
 
+import com.fake.stark.acquirer.entities.CreditCard;
+import com.fake.stark.acquirer.entities.Payment;
 import com.fake.stark.acquirer.entities.PurchaseOrder;
 import com.fake.stark.acquirer.persistence.Persistence;
 import com.fake.stark.acquirer.services.TransactionStates;
@@ -45,14 +47,14 @@ public class VoidValidatorImpl implements VoidValidator {
 	 */
 	@Override public TransactionStates validateVoid(final PurchaseOrder purchaseOrder) {
 
-		var transactionStates = TransactionStates.VOID_APPROVED;
-		var oldPurchaseOrder = persistence.getPurchaseOrderById(purchaseOrder.getId());
+		TransactionStates transactionStates = TransactionStates.VOID_APPROVED;
+		PurchaseOrder oldPurchaseOrder = persistence.getPurchaseOrderById(purchaseOrder.getId());
 		if (oldPurchaseOrder == null) {
 			transactionStates = TransactionStates.VOID_REJECTED_INVALID_ID;
 		} else {
-			var creditCard = persistence
+			CreditCard creditCard = persistence
 					.getCreditCardByUser(oldPurchaseOrder.getPayment().getCreditCard().getUser().getIdentification());
-			var payment = persistence.getPaymentById(purchaseOrder.getPayment().getId());
+			Payment payment = persistence.getPaymentById(purchaseOrder.getPayment().getId());
 			if (payment == null) {
 				transactionStates = TransactionStates.VOID_REJECTED_PAYMENT_ID_INVALID;
 			} else if (creditCardValidator

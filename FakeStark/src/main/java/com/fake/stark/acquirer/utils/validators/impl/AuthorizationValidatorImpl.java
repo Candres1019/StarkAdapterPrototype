@@ -1,6 +1,9 @@
 package com.fake.stark.acquirer.utils.validators.impl;
 
+import com.fake.stark.acquirer.entities.CreditCard;
+import com.fake.stark.acquirer.entities.Payment;
 import com.fake.stark.acquirer.entities.PurchaseOrder;
+import com.fake.stark.acquirer.entities.User;
 import com.fake.stark.acquirer.persistence.Persistence;
 import com.fake.stark.acquirer.services.TransactionStates;
 import com.fake.stark.acquirer.utils.validators.AuthorizationValidator;
@@ -45,14 +48,14 @@ public class AuthorizationValidatorImpl implements AuthorizationValidator {
 	 */
 	@Override public TransactionStates validateAuthorization(final PurchaseOrder purchaseOrder) {
 
-		var transactionStates = TransactionStates.AUTHORIZATION_APPROVED;
-		var user = persistence.getUserById(purchaseOrder.getPayment().getCreditCard().getUser().getIdentification());
-		var oldPurchaseOrder = persistence.getPurchaseOrderById(purchaseOrder.getId());
+		TransactionStates transactionStates = TransactionStates.AUTHORIZATION_APPROVED;
+		User user = persistence.getUserById(purchaseOrder.getPayment().getCreditCard().getUser().getIdentification());
+		PurchaseOrder oldPurchaseOrder = persistence.getPurchaseOrderById(purchaseOrder.getId());
 		if (user == null) {
 			transactionStates = TransactionStates.AUTHORIZATION_REJECTED_INVALID_USER;
 		} else {
-			var creditCard = persistence.getCreditCardByUser(user.getIdentification());
-			var payment = persistence.getPaymentById(purchaseOrder.getPayment().getId());
+			CreditCard creditCard = persistence.getCreditCardByUser(user.getIdentification());
+			Payment payment = persistence.getPaymentById(purchaseOrder.getPayment().getId());
 			if (creditCardValidator.validateCreditCardForAuthorization(creditCard, purchaseOrder.getPayment().getCreditCard())) {
 				transactionStates = TransactionStates.AUTHORIZATION_REJECTED_CREDIT_CARD_INVALID;
 			} else if (oldPurchaseOrder != null && oldPurchaseOrder.getDescription().contains(COMPLETED_DESCRIPTION)) {

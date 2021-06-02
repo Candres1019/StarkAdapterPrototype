@@ -4,7 +4,9 @@ import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
@@ -17,10 +19,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class StarkRestClient {
 
-	private static final String SERVER_URL = "http://localhost:8002/";
 	private static final String MEDIA_TYPE = "application/json";
 	private static final String ERROR_MESSAGE = "errorMessage";
+	private static final String ERROR_CODE = "ERROR";
 	private final JSONObject errorJson;
+	@Value("${stark.acquirer.url}")
+	private String serverUrl;
 
 	/**
 	 * Instantiates a new StarkRestClient service
@@ -29,7 +33,7 @@ public class StarkRestClient {
 
 		errorJson = new JSONObject();
 		errorJson.put("message", "Transaction Error");
-		errorJson.put("status", "ERROR");
+		errorJson.put("status", ERROR_CODE);
 	}
 
 	/**
@@ -40,17 +44,17 @@ public class StarkRestClient {
 	 */
 	public JSONObject doAuthorization(final JSONObject authorization) {
 
-		var request = new Request.Builder()
-				.url(SERVER_URL + "authorization")
+		Request request = new Request.Builder()
+				.url(serverUrl + "authorization")
 				.post(RequestBody.create(MediaType.parse(MEDIA_TYPE), authorization.toString()))
 				.build();
-		var httpClient = new OkHttpClient();
+		OkHttpClient httpClient = new OkHttpClient();
 		try {
-			var response = httpClient.newCall(request).execute();
+			Response response = httpClient.newCall(request).execute();
 			return new JSONObject(response.body().string());
 		} catch (Exception e) {
 			errorJson.put(ERROR_MESSAGE, e.getMessage());
-			errorJson.put("authorizationCode", "ERROR");
+			errorJson.put("authorizationCode", ERROR_CODE);
 			return errorJson;
 		}
 	}
@@ -63,17 +67,17 @@ public class StarkRestClient {
 	 */
 	public JSONObject doCapture(final JSONObject capture) {
 
-		var request = new Request.Builder()
-				.url(SERVER_URL + "capture")
+		Request request = new Request.Builder()
+				.url(serverUrl + "capture")
 				.post(RequestBody.create(MediaType.parse(MEDIA_TYPE), capture.toString()))
 				.build();
-		var httpClient = new OkHttpClient();
+		OkHttpClient httpClient = new OkHttpClient();
 		try {
-			var response = httpClient.newCall(request).execute();
+			Response response = httpClient.newCall(request).execute();
 			return new JSONObject(response.body().string());
 		} catch (Exception e) {
 			errorJson.put(ERROR_MESSAGE, e.getMessage());
-			errorJson.put("captureCode", "ERROR");
+			errorJson.put("captureCode", ERROR_CODE);
 			return errorJson;
 		}
 	}
@@ -86,17 +90,17 @@ public class StarkRestClient {
 	 */
 	public JSONObject doCancellation(final JSONObject cancellation) {
 
-		var request = new Request.Builder()
-				.url(SERVER_URL + "void")
+		Request request = new Request.Builder()
+				.url(serverUrl + "void")
 				.post(RequestBody.create(MediaType.parse(MEDIA_TYPE), cancellation.toString()))
 				.build();
-		var httpClient = new OkHttpClient();
+		OkHttpClient httpClient = new OkHttpClient();
 		try {
-			var response = httpClient.newCall(request).execute();
+			Response response = httpClient.newCall(request).execute();
 			return new JSONObject(response.body().string());
 		} catch (Exception e) {
 			errorJson.put(ERROR_MESSAGE, e.getMessage());
-			errorJson.put("voidCode", "ERROR");
+			errorJson.put("voidCode", ERROR_CODE);
 			return errorJson;
 		}
 	}
@@ -109,17 +113,17 @@ public class StarkRestClient {
 	 */
 	public JSONObject doRefund(final JSONObject refund) {
 
-		var request = new Request.Builder()
-				.url(SERVER_URL + "refund")
+		Request request = new Request.Builder()
+				.url(serverUrl + "refund")
 				.post(RequestBody.create(MediaType.parse(MEDIA_TYPE), refund.toString()))
 				.build();
-		var httpClient = new OkHttpClient();
+		OkHttpClient httpClient = new OkHttpClient();
 		try {
-			var response = httpClient.newCall(request).execute();
+			Response response = httpClient.newCall(request).execute();
 			return new JSONObject(response.body().string());
 		} catch (Exception e) {
 			errorJson.put(ERROR_MESSAGE, e.getMessage());
-			errorJson.put("refundCode", "ERROR");
+			errorJson.put("refundCode", ERROR_CODE);
 			return errorJson;
 		}
 	}

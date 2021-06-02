@@ -36,12 +36,12 @@ public class RefundUseCase implements Refund {
 	@Override public RefundResponse doRefund(final RefundMessage refundMessage, final JsonNode creditCardJson)
 			throws JsonProcessingException {
 
-		var refundMessageSerialized = new ObjectMapper().writeValueAsString(refundMessage);
-		var refundMessageJson = new JSONObject(refundMessageSerialized);
+		String refundMessageSerialized = new ObjectMapper().writeValueAsString(refundMessage);
+		JSONObject refundMessageJson = new JSONObject(refundMessageSerialized);
 		refundMessageJson.getJSONObject("payment").getJSONObject("creditCard")
 		                 .put("number", creditCardJson.get("number").asText());
-		var refundResponseJson = starkRestClient.doRefund(refundMessageJson);
-		var refundResponse = new ObjectMapper().readValue(refundResponseJson.toString(), RefundResponse.class);
+		JSONObject refundResponseJson = starkRestClient.doRefund(refundMessageJson);
+		RefundResponse refundResponse = new ObjectMapper().readValue(refundResponseJson.toString(), RefundResponse.class);
 		refundResponse.setCorrelationId(refundMessage.getCorrelationId());
 		refundResponse.setCaptureTraceabilityId(refundMessage.getCaptureTraceabilityId());
 		return refundResponse;

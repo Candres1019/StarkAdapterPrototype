@@ -1,0 +1,19 @@
+spring:
+  profiles.active: default
+---
+server:
+  port: 8001
+spring:
+  profiles: default
+  data:
+    mongodb:
+      database: UTS
+      uri: mongodb+srv://andres:d6ahdcenn39v@uts.l756p.mongodb.net/UTS?retryWrites=true&w=majority
+      collection: UTS
+      token-field: token
+  activemq:
+    broker-url: tcp://localhost:61616
+
+stark:
+  acquirer:
+    url: http://localhost:8002/

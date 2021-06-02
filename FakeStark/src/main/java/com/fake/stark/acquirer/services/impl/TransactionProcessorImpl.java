@@ -64,7 +64,7 @@ public class TransactionProcessorImpl implements TransactionProcessor {
 	@Override public PurchaseOrder processAuthorizationTransaction(final PurchaseOrder purchaseOrder) {
 
 		try {
-			var transactionStates = authorizationValidator.validateAuthorization(purchaseOrder);
+			TransactionStates transactionStates = authorizationValidator.validateAuthorization(purchaseOrder);
 			purchaseOrder.setStatus(transactionStates.name());
 			purchaseOrder.setDescription(transactionStates.getName());
 			if (transactionStates.equals(TransactionStates.AUTHORIZATION_APPROVED)) {
@@ -88,7 +88,7 @@ public class TransactionProcessorImpl implements TransactionProcessor {
 	@Override public PurchaseOrder processCaptureTransaction(final PurchaseOrder purchaseOrder) {
 
 		try {
-			var transactionStates = captureValidator.validateCapture(purchaseOrder);
+			TransactionStates transactionStates = captureValidator.validateCapture(purchaseOrder);
 			purchaseOrder.setStatus(transactionStates.name());
 			purchaseOrder.setDescription(transactionStates.getName());
 			if (transactionStates.equals(TransactionStates.CAPTURE_APPROVED)) {
@@ -112,7 +112,7 @@ public class TransactionProcessorImpl implements TransactionProcessor {
 	@Override public PurchaseOrder processVoidTransaction(final PurchaseOrder purchaseOrder) {
 
 		try {
-			var transactionStates = voidValidator.validateVoid(purchaseOrder);
+			TransactionStates transactionStates = voidValidator.validateVoid(purchaseOrder);
 			purchaseOrder.setStatus(transactionStates.name());
 			purchaseOrder.setDescription(transactionStates.getName());
 			if (transactionStates.equals(TransactionStates.VOID_APPROVED)) {
@@ -137,7 +137,7 @@ public class TransactionProcessorImpl implements TransactionProcessor {
 	@Override public PurchaseOrder processRefundTransaction(final PurchaseOrder purchaseOrder) {
 
 		try {
-			var transactionStates = refundValidator.validateRefund(purchaseOrder);
+			TransactionStates transactionStates = refundValidator.validateRefund(purchaseOrder);
 			purchaseOrder.setStatus(transactionStates.name());
 			purchaseOrder.setDescription(transactionStates.getName());
 			if (transactionStates.equals(TransactionStates.REFUND_APPROVED)) {
