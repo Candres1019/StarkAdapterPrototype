@@ -65,7 +65,6 @@ public class StarkAdapterHandlerImpl implements StarkAdapterHandler {
 			JsonNode creditCardJson = utsRequester.getCreditCardInfo(captureMessage.getCreditCard().getToken());
 			return new ObjectMapper().writeValueAsString(capture.doCapture(captureMessage, creditCardJson));
 		} catch (Exception e) {
-			e.printStackTrace();
 			log.error(e.getMessage());
 			return createJsonObjectError(e, "CAPT").toString();
 		}
