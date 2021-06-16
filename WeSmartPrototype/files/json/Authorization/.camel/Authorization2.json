@@ -1,0 +1,52 @@
+{
+	"correlationId": "db9ba646-cead-11eb-b8bc-0242ac130003",
+	"authorizationId": "e9efc010-cead-11eb-b8bc-0242ac130003",
+	"transaction": {
+		"id": "f15e8156-cead-11eb-b8bc-0242ac130003",
+		"type": "authorization",
+		"currency": "COP",
+		"status": "InVerification",
+		"total": 119000.0,
+		"tax": 19000.0,
+		"taxBase": 100000.0,
+		"creationDate": 1621486800000,
+		"modificationDate": 1621486800000,
+		"paymentOrder": {
+			"id": "f84b44ae-cead-11eb-b8bc-0242ac130003",
+			"reference": "JAGSGB3-3131",
+			"description": "Test payment order",
+			"billingAddress": "Cl 5 No 1B - 72",
+			"creationDate": 1621486800000,
+			"customer": {
+				"id": 1019151395,
+				"idType": "CC",
+				"name": "CustomerName",
+				"lastName": "CustomerLastName",
+				"email": "customer@mail.com",
+				"phone": "+57 3174414419",
+				"address": "Cl 5 No 1B - 72",
+				"creationDate": 1621486800000,
+				"modificationDate": 1621486800000
+			},
+			"seller": {
+				"id": 1,
+				"name": "Real Madrid",
+				"nit": "712361-21",
+				"merchantCategoryCode": "5423",
+				"phone": "+3 123131312",
+				"email": "real.madrid@mail.com",
+				"address": "La castellana",
+				"creationDate": 1621486800000,
+				"modificationDate": 1621486800000
+			}
+		}
+	},
+	"creditCard": {
+		"id": 123456789,
+		"type": "VISA",
+		"maskedNumber": "1234-56**-****-4321",
+		"token": "123456789923818231132",
+		"cardHolder": "CUSTOMER C CUSTOMER C",
+		"expirationDate": "2921486800000"
+	}
+}

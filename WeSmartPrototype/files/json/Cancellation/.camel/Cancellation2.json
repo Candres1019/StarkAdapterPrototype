@@ -1,0 +1,26 @@
+{
+	"correlationId": "db9ba646-cead-11eb-b8bc-0242ac130003",
+	"cancellationId": "bd04b7fc-ceaf-11eb-b8bc-0242ac130003",
+	"authorizationTraceabilityId": "db9ba646-cead-11eb-b8bc-0242ac130003",
+	"authorizationCode": "bd04b7fc-ceaf-11eb-b8bc-0242ac130003",
+	"transaction": {
+		"id": "f15e8156-cead-11eb-b8bc-0242ac130003",
+		"type": "refund",
+		"currency": "COP",
+		"status": "InVerification",
+		"total": 119000.0,
+		"tax": 19000.0,
+		"taxBase": 100000.0,
+		"paymentOrder": {
+			"id": "f84b44ae-cead-11eb-b8bc-0242ac130003"
+		}
+	},
+	"creditCard": {
+		"id": 123456789,
+		"type": "VISA",
+		"maskedNumber": "0000-00**-****-0000",
+		"token": "123456789923818231132",
+		"cardHolder": "CUSTOMER C CUSTOMER C",
+		"expirationDate": "2621486800000"
+	}
+}
