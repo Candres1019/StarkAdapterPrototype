@@ -9,6 +9,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+/**
+ * CaptureUseCaseTest class to test the CaptureUseCase class
+ *
+ * @author Andres Calderon - andres.calderon@payu.com
+ * @version 0.0.1
+ * @since 0.0.1
+ */
 @ExtendWith(MockitoExtension.class)
 class CaptureUseCaseTest {
 
@@ -18,6 +25,9 @@ class CaptureUseCaseTest {
 	@Mock
 	StarkRestClient starkRestClient;
 
+	/**
+	 * Test to ensure the correct dependency injection
+	 */
 	@Test
 	void shouldHaveStarkRestClient() {
 

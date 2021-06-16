@@ -9,6 +9,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+/**
+ * StarkProviderRoutesTest class to test the StarkProviderRoutes class
+ *
+ * @author Andres Calderon - andres.calderon@payu.com
+ * @version 0.0.1
+ * @since 0.0.1
+ */
 @ExtendWith(MockitoExtension.class)
 class StarkProviderRoutesTest {
 
@@ -18,6 +25,9 @@ class StarkProviderRoutesTest {
 	@Mock
 	StarkAdapterHandler starkAdapterHandler;
 
+	/**
+	 * Test to ensure the correct dependency injection
+	 */
 	@Test
 	void shouldHaveStarkProviderRoutes() {
 

@@ -15,6 +15,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+/**
+ * StarkAdapterHandlerImplTest class to test the StarkAdapterHandlerImpl class
+ *
+ * @author Andres Calderon - andres.calderon@payu.com
+ * @version 0.0.1
+ * @since 0.0.1
+ */
 @SpringBootTest
 class StarkAdapterHandlerImplTest {
 
@@ -26,6 +33,9 @@ class StarkAdapterHandlerImplTest {
 	private String refundString;
 	private String cancellationString;
 
+	/**
+	 * Method to prepare String Object to be sent in the tests
+	 */
 	@BeforeEach public void prepareObj() {
 
 		this.authString =
@@ -73,30 +83,45 @@ class StarkAdapterHandlerImplTest {
 						+ "\"CUSTOMER C CUSTOMER C\",\"expirationDate\":\"2621486800000\"}}";
 	}
 
+	/**
+	 * Method to test the doAuthorization method sending a null authorizationMessage, this method should respond with a AUTH_ERROR
+	 */
 	@Test
 	void doAuthorizationAndFailBecauseNotCorrectAuthorization() {
 
 		Assertions.assertTrue(starkAdapterHandler.doAuthorization(null).contains("AUTH_ERROR"));
 	}
 
+	/**
+	 * Method to test the doCapture method sending a null captureMessage this method should respond with a CAPT_ERROR
+	 */
 	@Test
 	void doCaptureAndFailBecauseNotCorrectCapture() {
 
 		Assertions.assertTrue(starkAdapterHandler.doCapture(null).contains("CAPT_ERROR"));
 	}
 
+	/**
+	 * Method to test the doRefund method sending a null refundMessage this method should respond with a REND_ERROR
+	 */
 	@Test
 	void doRefundAndFailBecauseNotCorrectRefund() {
 
 		Assertions.assertTrue(starkAdapterHandler.doRefund(null).contains("REND_ERROR"));
 	}
 
+	/**
+	 * Method to test the doCancellation method sending a null cancellationMessage this method should respond with a CNL_ERROR
+	 */
 	@Test
 	void doCancellationAndFailBecauseNotCorrectCancellation() {
 
 		Assertions.assertTrue(starkAdapterHandler.doCancellation(null).contains("CNL_ERROR"));
 	}
 
+	/**
+	 * Method to test the doAuthorization method sending a custom authorizationMessage this method should respond with a Failed connection
+	 */
 	@Test
 	void doAuthorizationAndFailBecauseServerNotActive() throws JsonProcessingException, JSONException {
 
@@ -105,6 +130,9 @@ class StarkAdapterHandlerImplTest {
 		Assertions.assertTrue(starkAdapterHandler.doAuthorization(authorizationMessage).contains("Failed to connect to"));
 	}
 
+	/**
+	 * Method to test the doCapture method sending a custom captureMessage this method should respond with a Failed connection
+	 */
 	@Test
 	void doCaptureAndFailBecauseServerNotActive() throws JsonProcessingException, JSONException {
 
@@ -113,6 +141,9 @@ class StarkAdapterHandlerImplTest {
 		Assertions.assertTrue(starkAdapterHandler.doCapture(captureMessage).contains("Failed to connect to"));
 	}
 
+	/**
+	 * Method to test the doRefund method sending a custom refundMessage this method should respond with a Failed connection
+	 */
 	@Test
 	void doRefundAndFailBecauseServerNotActive() throws JsonProcessingException, JSONException {
 
@@ -121,6 +152,9 @@ class StarkAdapterHandlerImplTest {
 		Assertions.assertTrue(starkAdapterHandler.doRefund(refundMessage).contains("Failed to connect to"));
 	}
 
+	/**
+	 * Method to test the doCancellation method sending a custom cancellationMessage this method should respond with a Failed connection
+	 */
 	@Test
 	void doCancellationAndFailBecauseServerNotActive() throws JsonProcessingException, JSONException {
 

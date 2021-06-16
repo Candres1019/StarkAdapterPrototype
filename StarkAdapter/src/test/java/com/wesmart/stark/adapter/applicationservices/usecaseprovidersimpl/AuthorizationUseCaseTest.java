@@ -9,6 +9,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+/**
+ * AuthorizationUseCaseTest class to test the AuthorizationUseCase class
+ *
+ * @author Andres Calderon - andres.calderon@payu.com
+ * @version 0.0.1
+ * @since 0.0.1
+ */
 @ExtendWith(MockitoExtension.class)
 class AuthorizationUseCaseTest {
 
@@ -18,6 +25,9 @@ class AuthorizationUseCaseTest {
 	@Mock
 	StarkRestClient starkRestClient;
 
+	/**
+	 * Test to ensure the correct dependency injection
+	 */
 	@Test
 	void shouldHaveStarkRestClient() {
 
