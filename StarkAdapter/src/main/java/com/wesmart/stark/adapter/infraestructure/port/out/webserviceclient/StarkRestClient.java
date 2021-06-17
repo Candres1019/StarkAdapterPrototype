@@ -51,6 +51,7 @@ public class StarkRestClient {
 		OkHttpClient httpClient = new OkHttpClient();
 		try {
 			Response response = httpClient.newCall(request).execute();
+			System.out.println(response.body().string());
 			return new JSONObject(response.body().string());
 		} catch (Exception e) {
 			errorJson.put(ERROR_MESSAGE, e.getMessage());
